@@ -1,0 +1,10 @@
+.footer {
+  width: 100%;
+  background-color: var(--elementBackground);
+  border-top: 1px solid;
+  border-color: var(--elementBorder);
+  padding: 20px;
+  text-align: center;
+  font-size: 14px;
+  color: var(--elementForeground);
+}
