@@ -17,10 +17,11 @@
   padding: 4 16 4 16;
   text-decoration: none;
   white-space: nowrap;
+  border-radius: 20px;
 }
 
 .navLink:hover {
-  background-color: #8c892e;
+  background-color: rgb(81, 116, 35);
 }
 
 .hamburger {
@@ -63,5 +64,6 @@
     color: var(--accentForeground);
     border-bottom: 1px solid;
     border-color: var(--elementBorder);
+    border-radius: 0px;
   }
 }

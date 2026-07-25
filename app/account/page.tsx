@@ -2,7 +2,7 @@
 export default function Page() {
   return (
     <div id="Account">
-      <h2>Account</h2>
+      <h1>Account</h1>
       <p>Your account</p>
     </div>
   );

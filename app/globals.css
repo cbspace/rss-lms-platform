@@ -8,17 +8,19 @@
   --elementBorder:#e2e8f0;
   --accentBackground: #c1bad8;
   --accentForeground: #42336fd3;
+  --headingColour: rgb(69, 61, 61);
   --footer-height: 80px;
 }
 
 [data-theme="dark"] {
   --background: #1e1c1e;
   --foreground: #ededed;
-  --elementBackground: #33183f;
-  --elementForeground: #a5adb9;
+  --elementBackground: #592468;
+  --elementForeground: #c6cfdc;
   --elementBorder:#2c1828;
-  --accentBackground: #592468;;
+  --accentBackground: #4E3D53;
   --accentForeground: #ededed;
+  --headingColour: rgb(154, 190, 192);
 }
 
 @theme inline {
@@ -41,6 +43,13 @@ body {
   display: flex;
   flex-direction: column;
   transition: background-color 0.2s, color 0.2s;
+}
+
+h1 {
+  font-size: 32; 
+  font-weight: bold;
+  color: var(--headingColour);
+  padding-bottom: 0.75em;
 }
 
 html {

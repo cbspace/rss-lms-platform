@@ -6,7 +6,7 @@ import NavSections from "./NavSections";
 export default function Header() {
   return (
     <header className={styles.header}>
-      <span className={styles.title}>Frontend Design & Usability</span>
+      <span className={styles.title}>RSS Server Frontend</span>
       <NavSections />
     </header>
   );
