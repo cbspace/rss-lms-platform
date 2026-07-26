@@ -4,17 +4,12 @@ import Link from 'next/link';
 export default function Page() {
   return (
     <div id="home" className="space-y-4">
-      {/* Hero / Intro Section */}
-      <section className="p-5 rounded-xl border border-[var(--elementBorder)] bg-[var(--elementBg)] space-y-4">
-        <h1>
-          Welcome <span aria-hidden="true">👋</span>
-        </h1>
+      <section className="p-4 rounded-xl border border-[var(--elementBorder)] bg-[var(--elementBg)] space-y-4">
+        <h1>Welcome <span aria-hidden="true">👋</span></h1>
         <p className="text-base opacity-90 max-w-3xl leading-relaxed">
           Welcome to the LMS RSS Server Platform! This platform has been designed to make collation, curation, 
           and distribution of external web RSS feeds simple, structured, and accessible for academic learning modules.
         </p>
-
-        {/* Quick Stats / Status Indicators */}
         <div className="pt-4 grid grid-cols-2 sm:grid-cols-4 gap-4 border-t border-[var(--elementBorder)] text-sm font-mono">
           <div>
             <span className="block opacity-60">INGESTION STATUS</span>
@@ -35,12 +30,9 @@ export default function Page() {
         </div>
       </section>
 
-      {/* Primary Workflow Navigation Cards */}
       <section className="space-y-4">
         <h2 className="text-xl font-semibold">Core System Modules</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          
-          {/* Feeds Card (Ingestion) */}
           <Link 
             href="/feeds" 
             className="group p-6 rounded-lg border border-[var(--elementBorder)] bg-[var(--elementBg)] hover:border-orange-500 transition-all flex flex-col justify-between"
@@ -62,8 +54,6 @@ export default function Page() {
               <span>→</span>
             </div>
           </Link>
-
-          {/* Channels Card (Egress) */}
           <Link 
             href="/channels" 
             className="group p-6 rounded-lg border border-[var(--elementBorder)] bg-[var(--elementBg)] hover:border-purple-500 transition-all flex flex-col justify-between"
@@ -85,13 +75,11 @@ export default function Page() {
               <span>→</span>
             </div>
           </Link>
-
         </div>
       </section>
 
-      {/* 3-Step Workflow Summary */}
-      <section className="p-6 rounded-lg border border-[var(--elementBorder)] bg-[var(--elementBg)] space-y-4">
-        <h2 className="text-lg font-semibold">How the Platform Works</h2>
+      <section className="bg-[var(--elementBg)] space-y-4">
+        <h2 className="text-xl font-semibold">How the Platform Works</h2>
         
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-sm">
           <div className="p-4 rounded border border-[var(--elementBorder)] bg-[var(--background)] space-y-2">

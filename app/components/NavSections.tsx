@@ -45,7 +45,7 @@ export default function NavSections() {
       <nav className={`${styles.nav} ${menuOpen ? styles.open : ""}`}>
         <Link className={styles.navLink} href="/" onClick={closeMenu}>Home</Link>
         <Link className={styles.navLink} href="/about" onClick={closeMenu}>About</Link>
-        <Link className={styles.navLink} href="/feeds" onClick={closeMenu}>Feeds</Link>
+        <Link className={styles.navLink} href="/posts" onClick={closeMenu}>Posts</Link>
         <Link className={styles.navLink} href="/channels" onClick={closeMenu}>Channels</Link>
         <Link className={styles.navLink} href="/settings" onClick={closeMenu}>Settings</Link>
       </nav>

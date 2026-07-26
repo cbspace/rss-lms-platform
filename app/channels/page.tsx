@@ -143,10 +143,10 @@ export default function ChannelsPage() {
             </button>
 
             <Link
-              href="/feeds"
+              href="/posts"
               className="px-3 py-1.5 rounded text-sm font-medium bg-purple-700 text-white hover:bg-purple-800 transition-colors flex items-center gap-1"
             >
-              <span>+ Add Posts in Feeds</span>
+              <span>+ Add Posts in Posts</span>
             </Link>
           </div>
         </div>

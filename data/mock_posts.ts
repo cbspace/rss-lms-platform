@@ -15,7 +15,7 @@ export interface MockPost {
 
 export const MOCK_POSTS: MockPost[] = [
   {
-    id: "post-1",
+    id: "1",
     guid: "rss-feed-dev-101",
     title: "Understanding Next.js App Router Layouts & Server Components",
     author: "Sarah Chen",
@@ -29,7 +29,7 @@ export const MOCK_POSTS: MockPost[] = [
     defaultLmsChannel: "CS101: Web Architectures"
   },
   {
-    id: "post-2",
+    id: "2",
     guid: "rss-feed-dev-102",
     title: "Building Accessible UI Components with WCAG 2.2 Guidelines",
     author: "Marcus Vance",
@@ -43,7 +43,7 @@ export const MOCK_POSTS: MockPost[] = [
     defaultLmsChannel: "CS101: Web Architectures"
   },
   {
-    id: "post-3",
+    id: "3",
     guid: "rss-feed-dev-103",
     title: "Tailwind CSS v4: Standardizing Theme Variables with Native CSS",
     author: "Elena Rostova",
@@ -57,7 +57,7 @@ export const MOCK_POSTS: MockPost[] = [
     defaultLmsChannel: "CS101: Web Architectures"
   },
   {
-    id: "post-4",
+    id: "4",
     guid: "rss-feed-ops-201",
     title: "Containerizing Node.js and Next.js Apps with Multi-Stage Docker Builds",
     author: "David Kim",
@@ -71,7 +71,7 @@ export const MOCK_POSTS: MockPost[] = [
     defaultLmsChannel: "CS102: Systems & Deployment"
   },
   {
-    id: "post-5",
+    id: "5",
     guid: "rss-feed-ops-202",
     title: "Prisma ORM vs Raw SQL: Schema Migrations and Type Safety",
     author: "Rachel Adams",
@@ -85,7 +85,7 @@ export const MOCK_POSTS: MockPost[] = [
     defaultLmsChannel: "CS102: Systems & Deployment"
   },
   {
-    id: "post-6",
+    id: "6",
     guid: "rss-feed-ops-203",
     title: "Designing RESTful Health Check & Metrics Endpoints (/health & /count)",
     author: "Alex Rivera",
@@ -99,7 +99,7 @@ export const MOCK_POSTS: MockPost[] = [
     defaultLmsChannel: "CS102: Systems & Deployment"
   },
   {
-    id: "post-7",
+    id: "7",
     guid: "rss-feed-edu-301",
     title: "Integrating Automated RSS Content Streams into LMS Curriculums",
     author: "Dr. Aris Thorne",
@@ -113,7 +113,7 @@ export const MOCK_POSTS: MockPost[] = [
     defaultLmsChannel: "CS100: EdTech & Industry Integration"
   },
   {
-    id: "post-8",
+    id: "8",
     guid: "rss-feed-edu-302",
     title: "Micro-Learning & Content Curation: Preventing Information Overload",
     author: "Priya Patel",
@@ -127,7 +127,7 @@ export const MOCK_POSTS: MockPost[] = [
     defaultLmsChannel: "CS100: EdTech & Industry Integration"
   },
   {
-    id: "post-9",
+    id: "9",
     guid: "rss-feed-algo-401",
     title: "Graph Traversal Algorithms in Practice: BFS vs DFS in Web Crawlers",
     author: "Liam O'Connor",
@@ -141,7 +141,7 @@ export const MOCK_POSTS: MockPost[] = [
     defaultLmsChannel: "CS103: Algorithms & Data Structures"
   },
   {
-    id: "post-10",
+    id: "10",
     guid: "rss-feed-algo-402",
     title: "Optimizing In-Memory Cache with LRU (Least Recently Used) Eviction",
     author: "Kenji Sato",
@@ -155,7 +155,7 @@ export const MOCK_POSTS: MockPost[] = [
     defaultLmsChannel: "CS103: Algorithms & Data Structures"
   },
   {
-    id: "post-11",
+    id: "11",
     guid: "rss-feed-eth-501",
     title: "Ethical Data Scraping and Robots.txt Compliance for Automated Bots",
     author: "Amara Okezie",
@@ -169,7 +169,7 @@ export const MOCK_POSTS: MockPost[] = [
     defaultLmsChannel: "CS104: Tech Ethics & Policy"
   },
   {
-    id: "post-12",
+    id: "12",
     guid: "rss-feed-eth-502",
     title: "Algorithmic Bias in Autonomous Content Recommendation Engines",
     author: "Sofia Al-Mansoor",

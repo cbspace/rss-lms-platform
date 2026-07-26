@@ -5,6 +5,7 @@ import "./globals.css";
 import { ThemeProvider } from "./components/ThemeProvider";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
+import Breadcrumbs from "./components/Breadcrumbs";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -52,15 +53,18 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col">
-        <ThemeProvider>
-          <Header />
-          <main className="flex-1 min-h-0 p-5">
-            {children}
-          </main>
-          <Footer />
-        </ThemeProvider>
-      </body>
+<body className="min-h-full flex flex-col">
+  <ThemeProvider>
+    <Header />
+    <main className="flex-1 min-h-0 w-full max-w-6xl mx-auto px-6 sm:px-8 pt-2 pb-6">
+      <div className="mt-1 mb-4">
+        <Breadcrumbs />
+      </div>
+      {children}
+    </main>
+    <Footer />
+  </ThemeProvider>
+</body>
     </html>
   );
 }

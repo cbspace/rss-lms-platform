@@ -6,14 +6,12 @@ export default function AboutPage() {
     <div id="About" className="space-y-6">
       {/* Hero Header */}
       <section className="p-5 rounded-xl border border-[var(--elementBorder)] bg-[var(--elementBg)] space-y-4">
-        <h1>
-          About <span aria-hidden="true">📜</span>
-        </h1>
+        <h1>About <span aria-hidden="true">📜</span></h1>
         <p className="text-base opacity-90 max-w-3xl leading-relaxed">
           The full project consists of a Learning Management System (LMS) and RSS server architecture. 
           The current phase of the project is <strong>Assessment 1</strong>, where the frontend interface and interactive client workflow have been completed.
         </p>
-        <p className="text-sm opacity-80 max-w-3xl leading-relaxed">
+        <p className="text-base max-w-3xl leading-relaxed">
           Connections to the backend LMS and external RSS servers are currently simulated via structured client-side mock components and local state persistence.
         </p>
       </section>
