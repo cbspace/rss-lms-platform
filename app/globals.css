@@ -17,7 +17,7 @@
   --foreground: #ededed;
   --elementBackground: #592468;
   --elementForeground: #c6cfdc;
-  --elementBorder:#2c1828;
+  --elementBorder:#3f2239;
   --accentBackground: #4E3D53;
   --accentForeground: #ededed;
   --headingColour: rgb(154, 190, 192);
@@ -49,7 +49,6 @@ h1 {
   font-size: 32; 
   font-weight: bold;
   color: var(--headingColour);
-  padding-bottom: 0.75em;
 }
 
 html {
