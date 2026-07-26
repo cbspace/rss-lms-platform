@@ -6,13 +6,15 @@ export default function AboutPage() {
     <div id="About" className="space-y-6">
       {/* Hero Header */}
       <section className="p-5 rounded-xl border border-[var(--elementBorder)] bg-[var(--elementBg)] space-y-4">
-        <h1>About <span aria-hidden="true">📜</span></h1>
+        <h1 className="text-2xl font-bold tracking-tight">
+          About <span aria-hidden="true">📜</span>
+        </h1>
         <p className="text-base opacity-90 max-w-3xl leading-relaxed">
-          The full project consists of a Learning Management System (LMS) and RSS server architecture. 
-          The current phase of the project is <strong>Assessment 1</strong>, where the frontend interface and interactive client workflow have been completed.
+          The full project consists of a Learning Management System (LMS) multi-channel blog authoring and RSS syndication architecture. 
+          The current phase of the project is <strong>Assessment 1</strong>, where the frontend interface and interactive client authoring workflow have been completed.
         </p>
-        <p className="text-base max-w-3xl leading-relaxed">
-          Connections to the backend LMS and external RSS servers are currently simulated via structured client-side mock components and local state persistence.
+        <p className="text-base max-w-3xl leading-relaxed opacity-80">
+          Connections to backend database persistence and live RSS XML feeds are currently simulated via structured client-side mock components and local state management.
         </p>
       </section>
 
@@ -24,9 +26,9 @@ export default function AboutPage() {
           <div className="flex items-center gap-2 text-purple-400 font-mono text-sm uppercase tracking-wider font-semibold">
             <span>⚙️ Scope & Intent</span>
           </div>
-          <h2 className="text-lg font-bold">The RSS-to-LMS Bridge</h2>
+          <h2 className="text-lg font-bold">Multi-Channel Educational Syndication</h2>
           <p className="text-sm opacity-80 leading-relaxed">
-            Unfiltered RSS feeds can flood students with irrelevant content. This application acts as an educational gateway, allowing instructors to ingest, inspect, and approve high-value web articles before distributing them to target course channels.
+            Rather than broadcasting all updates to a single feed, this application functions as a multi-channel publishing platform. Instructors author technical posts, lab announcements, and course readings, routing each article to one or more targeted LMS output feeds (e.g., CS101, CS102, or General).
           </p>
         </div>
 
@@ -37,10 +39,10 @@ export default function AboutPage() {
           </div>
           <h2 className="text-lg font-bold">Key Client Capabilities</h2>
           <ul className="text-sm opacity-80 space-y-1.5 list-disc list-inside">
-            <li>Dynamic Dark/Light theme switching via CSS variables</li>
-            <li>Interactive feed accordions for collapsible source groups</li>
-            <li>Client-side state routing to simulate LMS Channel syncing</li>
-            <li>Safe client-side hydration for <code>localStorage</code> persistence</li>
+            <li>Multi-channel publishing controls with select-all capabilities</li>
+            <li>Client-side form validation with interactive warning states</li>
+            <li>Interactive channel filter pills with dynamic card badges</li>
+            <li>Dynamic dark/light theme switching via CSS variables</li>
             <li>WCAG 2.2 accessible structure with semantic HTML</li>
           </ul>
         </div>
@@ -61,7 +63,7 @@ export default function AboutPage() {
             </span>
             <h3 className="font-bold text-sm">Assessment 1: Frontend & UI Simulation</h3>
             <p className="opacity-80 leading-relaxed">
-              Complete layout structure, Next.js App Router setup, interactive feed filtering, mock data ingestion, theme toggling, and client state simulation.
+              Complete layout structure, Next.js App Router setup, interactive multi-channel selection, mock data publishing, theme toggling, and client state simulation.
             </p>
           </div>
 
@@ -72,24 +74,12 @@ export default function AboutPage() {
             </span>
             <h3 className="font-bold text-sm">Assessment 2: Backend & Database Integration</h3>
             <p className="opacity-80 leading-relaxed">
-              Replacing mock datasets with real PostgreSQL/Prisma database models, live RSS XML parser endpoints, operational health metrics, and LMS API dispatches.
+              Replacing mock datasets with PostgreSQL/Prisma models, active RSS 2.0 XML generator endpoints (`/api/rss?channel=`), operational health telemetry, and database persistence.
             </p>
           </div>
         </div>
       </section>
 
-      {/* Navigation Footer */}
-      <div className="pt-4 flex justify-between items-center text-sm opacity-80 border-t border-[var(--elementBorder)]">
-        <span>Ready to explore the simulated workflow?</span>
-        <div className="flex gap-4">
-          <Link href="/feeds" className="hover:text-orange-400 transition-colors font-medium">
-            📡 View Ingestion Stream →
-          </Link>
-          <Link href="/channels" className="hover:text-purple-400 transition-colors font-medium">
-            📺 View LMS Channels →
-          </Link>
-        </div>
-      </div>
     </div>
   );
 }
