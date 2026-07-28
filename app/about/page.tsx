@@ -23,22 +23,22 @@ export default function AboutPage() {
         
         {/* Architectural Purpose */}
         <div className="p-6 rounded-lg border border-[var(--elementBorder)] bg-[var(--elementBg)] space-y-3">
-          <div className="flex items-center gap-2 text-purple-400 font-mono text-sm uppercase tracking-wider font-semibold">
+          <div className="flex items-center gap-2 text-purple-400 font-mono text-base uppercase tracking-wider font-semibold">
             <span>⚙️ Scope & Intent</span>
           </div>
           <h2 className="text-lg font-bold">Multi-Channel Educational Syndication</h2>
-          <p className="text-sm opacity-80 leading-relaxed">
+          <p className="text-base opacity-80 leading-relaxed">
             Rather than broadcasting all updates to a single feed, this application functions as a multi-channel publishing platform. Instructors author technical posts, lab announcements, and course readings, routing each article to one or more targeted LMS output feeds (e.g., CS101, CS102, or General).
           </p>
         </div>
 
         {/* Frontend Implementation Highlights */}
         <div className="p-6 rounded-lg border border-[var(--elementBorder)] bg-[var(--elementBg)] space-y-3">
-          <div className="flex items-center gap-2 text-orange-400 font-mono text-sm uppercase tracking-wider font-semibold">
+          <div className="flex items-center gap-2 text-orange-400 font-mono text-base uppercase tracking-wider font-semibold">
             <span>🎨 Assessment 1 Highlights</span>
           </div>
           <h2 className="text-lg font-bold">Key Client Capabilities</h2>
-          <ul className="text-sm opacity-80 space-y-1.5 list-disc list-inside">
+          <ul className="text-base opacity-80 space-y-0.5 list-disc list-inside">
             <li>Multi-channel publishing controls with select-all capabilities</li>
             <li>Client-side form validation with interactive warning states</li>
             <li>Interactive channel filter pills with dynamic card badges</li>
@@ -55,13 +55,13 @@ export default function AboutPage() {
           <span>🗺️</span> Implementation Roadmap
         </h2>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-base">
           {/* Phase 1: Assessment 1 */}
           <div className="p-4 rounded border border-purple-500/30 bg-[var(--background)] space-y-2 relative overflow-hidden">
             <span className="inline-block px-2 py-0.5 rounded text-[10px] font-mono bg-purple-500/20 text-purple-400 font-bold">
               CURRENT PHASE
             </span>
-            <h3 className="font-bold text-sm">Assessment 1: Frontend & UI Simulation</h3>
+            <h3 className="font-bold text-base">Assessment 1: Frontend & UI Simulation</h3>
             <p className="opacity-80 leading-relaxed">
               Complete layout structure, Next.js App Router setup, interactive multi-channel selection, mock data publishing, theme toggling, and client state simulation.
             </p>
@@ -72,7 +72,7 @@ export default function AboutPage() {
             <span className="inline-block px-2 py-0.5 rounded text-[10px] font-mono bg-gray-500/20 text-gray-400 font-bold">
               UPCOMING (ASSESSMENT 2)
             </span>
-            <h3 className="font-bold text-sm">Assessment 2: Backend & Database Integration</h3>
+            <h3 className="font-bold text-base">Assessment 2: Backend & Database Integration</h3>
             <p className="opacity-80 leading-relaxed">
               Replacing mock datasets with PostgreSQL/Prisma models, active RSS 2.0 XML generator endpoints (`/api/rss?channel=`), operational health telemetry, and database persistence.
             </p>

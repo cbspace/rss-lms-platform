@@ -35,19 +35,19 @@ export default function ChannelsPage() {
   return (
     <div className="w-full space-y-6">
       {/* Header Block */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-[var(--elementBorder)] pb-4">
-        <div>
-          <h1 className="text-3xl font-bold tracking-tight">
-            Output Channels <span aria-hidden="true">📺</span>
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4">
+        <div className="space-y-4">
+          <h1>
+            Distribution Channels <span aria-hidden="true">📺</span>
           </h1>
-          <p className="text-sm opacity-80 mt-1">
+          <p className="text-base opacity-80">
             Manage course streams and public RSS output channels for subscribers.
           </p>
         </div>
 
         <button
           onClick={() => setShowAddForm(!showAddForm)}
-          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold shadow-sm transition-colors self-start sm:self-auto"
+          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-sm font-semibold shadow-sm transition-colors self-start sm:self-auto"
         >
           <span>{showAddForm ? '✕ Cancel' : '＋ Add Channel'}</span>
         </button>
@@ -65,7 +65,7 @@ export default function ChannelsPage() {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div>
-              <label htmlFor="channel-id" className="block text-xs font-mono opacity-80 mb-1">
+              <label htmlFor="channel-id" className="block text-sm font-mono opacity-80 mb-1">
                 Channel ID / Slug *
               </label>
               <input
@@ -75,12 +75,12 @@ export default function ChannelsPage() {
                 value={newChannel.id}
                 onChange={(e) => setNewChannel({ ...newChannel, id: e.target.value })}
                 placeholder="e.g., cs103"
-                className="w-full p-2.5 rounded-lg border border-[var(--elementBorder)] bg-[var(--background)] text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 font-mono"
+                className="w-full p-2.5 rounded-lg border border-[var(--elementBorder)] bg-[var(--background)] text-base focus:outline-none focus:ring-2 focus:ring-purple-500 font-mono"
               />
             </div>
 
             <div>
-              <label htmlFor="channel-name" className="block text-xs font-mono opacity-80 mb-1">
+              <label htmlFor="channel-name" className="block text-sm font-mono opacity-80 mb-1">
                 Channel Display Name *
               </label>
               <input
@@ -90,13 +90,13 @@ export default function ChannelsPage() {
                 value={newChannel.name}
                 onChange={(e) => setNewChannel({ ...newChannel, name: e.target.value })}
                 placeholder="e.g., CS103: Algorithms Feed"
-                className="w-full p-2.5 rounded-lg border border-[var(--elementBorder)] bg-[var(--background)] text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+                className="w-full p-2.5 rounded-lg border border-[var(--elementBorder)] bg-[var(--background)] text-base focus:outline-none focus:ring-2 focus:ring-purple-500"
               />
             </div>
           </div>
 
           <div>
-            <label htmlFor="channel-desc" className="block text-xs font-mono opacity-80 mb-1">
+            <label htmlFor="channel-desc" className="block text-sm font-mono opacity-80 mb-1">
               Description / Target Audience
             </label>
             <input
@@ -105,14 +105,14 @@ export default function ChannelsPage() {
               value={newChannel.description}
               onChange={(e) => setNewChannel({ ...newChannel, description: e.target.value })}
               placeholder="e.g., Weekly lecture materials and lab updates"
-              className="w-full p-2.5 rounded-lg border border-[var(--elementBorder)] bg-[var(--background)] text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+              className="w-full p-2.5 rounded-lg border border-[var(--elementBorder)] bg-[var(--background)] text-base focus:outline-none focus:ring-2 focus:ring-purple-500"
             />
           </div>
 
           <div className="flex justify-end pt-2">
             <button
               type="submit"
-              className="px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold transition-colors"
+              className="px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-sm font-semibold transition-colors"
             >
               Create Channel
             </button>
@@ -123,7 +123,7 @@ export default function ChannelsPage() {
       {/* Channels List Grid */}
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         {channelsList.map((channel) => {
-          const rssEndpoint = `/api/rss?channel=${channel.id}`;
+          const rssEndpoint = `/api/rss/${channel.id}`;
 
           return (
             <div
@@ -132,24 +132,24 @@ export default function ChannelsPage() {
             >
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
-                  <span className="px-2.5 py-0.5 rounded text-xs font-mono bg-purple-500/10 text-purple-400 border border-purple-500/20 font-semibold">
+                  <span className="px-2.5 py-0.5 rounded text-sm font-mono bg-purple-500/10 text-purple-400 border border-purple-500/20 font-semibold">
                     ID: {channel.id}
                   </span>
-                  <span className="text-[10px] font-mono opacity-50">Active Stream</span>
+                  <span className="text-sm font-mono opacity-50">Active Stream</span>
                 </div>
 
                 <h2 className="text-lg font-bold text-[var(--foreground)]">
                   📺 {channel.name}
                 </h2>
 
-                <p className="text-sm opacity-80 leading-relaxed">
+                <p className="text-base opacity-80 leading-relaxed">
                   {channel.description || 'No description provided for this channel.'}
                 </p>
               </div>
 
               {/* Channel RSS Endpoint Preview & Link */}
-              <div className="pt-3 border-t border-[var(--elementBorder)] flex items-center justify-between gap-2">
-                <code className="text-[11px] font-mono opacity-60 truncate bg-[var(--background)] px-2 py-1 rounded">
+              <div className="pt-2 flex items-center justify-between gap-2">
+                <code className="text-sm font-mono opacity-60 truncate bg-[var(--background)] px-2 py-1 rounded">
                   {rssEndpoint}
                 </code>
 
@@ -157,7 +157,7 @@ export default function ChannelsPage() {
                   href={rssEndpoint}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center gap-1 text-xs font-mono font-medium text-orange-400 hover:underline shrink-0"
+                  className="inline-flex items-center gap-1 text-sm font-mono font-medium text-orange-400 hover:underline shrink-0"
                 >
                   <span>RSS XML</span>
                   <span aria-hidden="true">↗</span>
