@@ -1,26 +1,28 @@
 // app/page.tsx
 'use client';
 
+import TitleSection from './components/TitleSection';
 import ModuleCard from './components/ModuleCard';
 import InfoModuleCard from './components/InfoModuleCard';
 
 export default function Page() {
   return (
     <div id="home" className="space-y-8">
-      {/* Welcome Banner */}
-      <section className="space-y-4">
-        <h1 className="text-2xl font-bold tracking-tight">
-          Welcome <span aria-hidden="true">👋</span>
-        </h1>
-        <p className="text-base opacity-90 leading-relaxed">
-          Welcome to the LMS RSS Server Platform! This platform has been designed to make authoring, curation, 
-          and multi-channel distribution of technical articles simple, structured, and accessible for academic learning modules.
-        </p>
-      </section>
+      <TitleSection
+        title="Welcome"
+        icon="👋"
+        content={
+          <>
+            <p>
+              Welcome to the LMS RSS Server Platform! This platform has been designed to make authoring, curation, 
+              and multi-channel distribution of technical articles simple, structured, and accessible for academic learning modules.
+            </p>
+          </>}
+      />
 
       {/* Core System Modules */}
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">Core System Modules</h2>
+        <h2 className="text-xl font-semibold pl-5">Core System Modules</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           <ModuleCard
             href="/posts"
@@ -45,7 +47,7 @@ export default function Page() {
 
       {/* How the Platform Works */}
       <section className="space-y-4">
-        <h2 className="text-xl font-semibold">How the Platform Works</h2>
+        <h2 className="text-xl font-semibold pl-3">How the Platform Works</h2>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-base">
           <InfoModuleCard
             tag="01 / COMPOSED"

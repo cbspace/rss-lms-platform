@@ -4,7 +4,7 @@
 export interface InfoModuleCardProps {
   tag: string;
   title: string;
-  description: string | string[]; // Accepts a single string OR an array of strings
+  description: string | string[]; // Accepts a single string OR an array of strings (for a <ul> list)
   heading_gap?: boolean;
   colour?: string;
   compact?: boolean;

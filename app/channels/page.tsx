@@ -4,6 +4,7 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { CHANNELS, type Channel } from '@/data/channels';
+import TitleSection from '../components/TitleSection';
 
 export default function ChannelsPage() {
   const [channelsList, setChannelsList] = useState<Channel[]>(CHANNELS);
@@ -34,25 +35,27 @@ export default function ChannelsPage() {
 
   return (
     <div className="w-full space-y-6">
-      {/* Header Block */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4">
-        <div className="space-y-4">
-          <h1>
-            Distribution Channels <span aria-hidden="true">📺</span>
-          </h1>
-          <p className="text-base opacity-80">
-            Manage course streams and public RSS output channels for subscribers.
-          </p>
-        </div>
+      <TitleSection
+        title="RSS Channels"
+        icon="📺"
+        content={
+          <>
+            <p>
+              Manage course streams and public RSS output channels for subscribers.
+            </p>
+          </>}
 
-        <button
-          onClick={() => setShowAddForm(!showAddForm)}
-          className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-sm font-semibold shadow-sm transition-colors self-start sm:self-auto"
-        >
-          <span>{showAddForm ? '✕ Cancel' : '＋ Add Channel'}</span>
-        </button>
-      </div>
-
+        right_section={
+          <>
+            <button
+              onClick={() => setShowAddForm(!showAddForm)}
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-sm font-semibold shadow-sm transition-colors self-start sm:self-auto"
+            >
+              <span>{showAddForm ? '✕ Cancel' : '＋ Add Channel'}</span>
+            </button>
+          </>
+        }
+      />
       {/* Add New Channel Panel (Collapsible) */}
       {showAddForm && (
         <form

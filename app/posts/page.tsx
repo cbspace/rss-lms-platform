@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { getStoredPosts } from '../lib/PostsStorage';
 import { type MockPost } from '@/data/mock_posts';
 import { CHANNELS } from '@/data/channels';
+import TitleSection from '../components/TitleSection';
 
 export default function PostsIndexPage() {
   const [posts, setPosts] = useState<MockPost[]>([]);
@@ -37,29 +38,32 @@ export default function PostsIndexPage() {
 
   return (
     <div className="w-full space-y-6">
-      {/* Header Block */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pb-4">
-        <div className="space-y-4">
-          <h1>
-            Blog Articles <span aria-hidden="true">✍️</span>
-          </h1>
-          <p className="text-base opacity-80">
-            Manage published articles and RSS output feeds.
-          </p>
-        </div>
+      <TitleSection
+        title="Blog Articles"
+        icon="✍️"
+        content={
+          <>
+            <p>
+              Manage published articles and RSS output feeds.
+            </p>
+          </>}
 
-        {/* Action Button Row */}
-        <div className="flex items-center gap-3 self-start sm:self-auto">
-          {/* ➕ Create New Post Button */}
-          <Link
-            href="/posts/create"
-            className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-sm font-semibold shadow-sm transition-colors"
-          >
-            <span aria-hidden="true">＋</span>
-            <span>Create Post</span>
-          </Link>
-        </div>
-      </div>
+        right_section={
+          <>
+          {/* Action Button Row */}
+          <div className="flex items-center gap-3 self-start sm:self-auto">
+            {/* ➕ Create New Post Button */}
+            <Link
+              href="/posts/create"
+              className="inline-flex items-center gap-1.5 px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-sm font-semibold shadow-sm transition-colors"
+            >
+              <span aria-hidden="true">＋</span>
+              <span>Create Post</span>
+            </Link>
+          </div>
+          </>
+        }
+      />
 
       {/* Channel Filter Selector & Article Search Bar */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pb-1 w-full">

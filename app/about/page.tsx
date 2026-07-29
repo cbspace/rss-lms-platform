@@ -1,22 +1,24 @@
 // app/about/page.tsx
+import TitleSection from "../components/TitleSection";
 import InfoModuleCard from "../components/InfoModuleCard";
 
 export default function AboutPage() {
   return (
     <div id="About" className="space-y-8">
-      {/* Hero Header */}
-      <section className="space-y-4">
-        <h1 className="text-2xl font-bold tracking-tight">
-          About <span aria-hidden="true">📜</span>
-        </h1>
-        <p className="text-base opacity-90 leading-relaxed">
-          The full project consists of a Learning Management System (LMS) multi-channel blog authoring and RSS syndication architecture. 
-          The current phase of the project is <strong>Assessment 1</strong>, where the frontend interface and interactive client authoring workflow have been completed.
-        </p>
-        <p className="text-base leading-relaxed opacity-80">
-          Connections to backend database persistence and live RSS XML feeds are currently simulated via structured client-side mock components and local state management.
-        </p>
-      </section>
+      <TitleSection
+        title="About"
+        icon="📜"
+        content={
+          <>
+            <p>
+              The full project consists of a Learning Management System (LMS) multi-channel blog authoring and RSS syndication architecture. 
+              The current phase of the project is <strong>Assessment 1</strong>, where the frontend interface and interactive client authoring workflow have been completed.
+            </p>
+            <p>
+              Connections to backend database persistence and live RSS XML feeds are currently simulated via structured client-side mock components and local state management.
+            </p>
+          </>}
+      />
 
       <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <InfoModuleCard
