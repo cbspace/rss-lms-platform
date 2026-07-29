@@ -7,6 +7,7 @@ import Link from 'next/link';
 import ChannelSelect from '../../components/ChannelSelect';
 import { savePost } from '../../lib/PostsStorage';
 import { type MockPost } from '@/data/mock_posts';
+import TitleSection from '@/app/components/TitleSection';
 
 export default function CreatePostPage() {
   const router = useRouter();
@@ -55,13 +56,17 @@ export default function CreatePostPage() {
   };
 
   return (
-    <div className="w-full max-w-2xl mx-auto space-y-6">
-      <div className="border-b border-[var(--elementBorder)] pb-4 space-y-1">
-        <h1 className="text-2xl font-bold tracking-tight">Create New Article</h1>
-        <p className="text-sm opacity-80">
-          Publish an article and route it across single or multiple RSS channels.
-        </p>
-      </div>
+    <div id="create_post" className="w-full max-w-3xl mx-auto space-y-6 pb-10">
+      <TitleSection
+        title="Create New Post"
+        icon="🖋️"
+        content={
+          <>
+            <p>
+              Create and new post and publish it across single or multiple RSS channels.
+            </p>
+          </>}
+      />
 
       <form
         onSubmit={handleSubmit}
@@ -69,8 +74,8 @@ export default function CreatePostPage() {
       >
         {/* Title */}
         <div>
-          <label htmlFor="title" className="block text-xs font-mono font-medium opacity-80 mb-1.5">
-            Article Title *
+          <label htmlFor="title" className="block text-sm font-mono font-medium opacity-80 mb-1.5">
+            Post Title *
           </label>
           <input
             id="title"
@@ -78,14 +83,14 @@ export default function CreatePostPage() {
             required
             value={formData.title}
             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-            placeholder="e.g., Introduction to Multi-Channel RSS Publishing"
+            placeholder="Short Post Title"
             className="w-full p-2.5 rounded-lg border border-[var(--elementBorder)] bg-[var(--background)] text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
           />
         </div>
 
         {/* Banner Image */}
         <div>
-          <label htmlFor="imageUrl" className="block text-xs font-mono font-medium opacity-80 mb-1.5">
+          <label htmlFor="imageUrl" className="block text-sm font-mono font-medium opacity-80 mb-1.5">
             Banner Image URL (Optional)
           </label>
           <input
@@ -100,8 +105,8 @@ export default function CreatePostPage() {
 
         {/* Summary */}
         <div>
-          <label htmlFor="summary" className="block text-xs font-mono font-medium opacity-80 mb-1.5">
-            Article Content / Summary *
+          <label htmlFor="summary" className="block text-sm font-mono font-medium opacity-80 mb-1.5">
+            Post Content / Summary *
           </label>
           <textarea
             id="summary"
@@ -109,7 +114,7 @@ export default function CreatePostPage() {
             rows={5}
             value={formData.summary}
             onChange={(e) => setFormData({ ...formData, summary: e.target.value })}
-            placeholder="Write your announcement or article content..."
+            placeholder="Write your announcement or Post content..."
             className="w-full p-2.5 rounded-lg border border-[var(--elementBorder)] bg-[var(--background)] text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 leading-relaxed"
           />
         </div>
@@ -125,16 +130,16 @@ export default function CreatePostPage() {
         />
 
         {/* Form Actions */}
-        <div className="pt-4 flex justify-between items-center border-t border-[var(--elementBorder)]">
-          <Link href="/posts" className="text-xs text-purple-400 hover:underline font-medium">
+        <div className="pt-2 flex justify-between items-center">
+          <Link href="/posts" className="text-sm text-purple-400 hover:underline font-medium">
             ← Cancel
           </Link>
 
           <button
             type="submit"
-            className="px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-xs font-semibold shadow-sm transition-colors"
+            className="px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-sm font-semibold shadow-sm transition-colors"
           >
-            Publish Article & Update RSS Feeds
+            Publish Post & Update RSS Feeds
           </button>
         </div>
       </form>

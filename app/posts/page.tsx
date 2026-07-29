@@ -37,14 +37,14 @@ export default function PostsIndexPage() {
   });
 
   return (
-    <div className="w-full space-y-6">
+    <div id="posts" className="w-full space-y-6 pb-10">
       <TitleSection
-        title="Blog Articles"
+        title="Blog Posts"
         icon="✍️"
         content={
           <>
             <p>
-              Manage published articles and RSS output feeds.
+              Manage published blog posts and search posts across feeds.
             </p>
           </>}
 
@@ -65,9 +65,9 @@ export default function PostsIndexPage() {
         }
       />
 
-      {/* Channel Filter Selector & Article Search Bar */}
+      {/* Channel Filter Selector & Posts Search Bar */}
       <div className="flex flex-col sm:flex-row items-center justify-between gap-3 pb-1 w-full">
-        {/* Article Search Input Box */}
+        {/* Posts Search Input Box */}
         <div className="relative w-full sm:w-72 shrink-0 h-8 flex items-center">
           <span className="absolute left-3 flex items-center pointer-events-none text-sm opacity-50">
             🔍
@@ -76,7 +76,7 @@ export default function PostsIndexPage() {
             type="text"
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
-            placeholder="Search articles..."
+            placeholder="Search Posts"
             className="w-full pl-8 pr-8 h-8 rounded-full border border-[var(--elementBorder)] text-sm font-mono focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all leading-none flex items-center"
           />
           {searchQuery && (

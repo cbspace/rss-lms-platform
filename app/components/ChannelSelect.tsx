@@ -33,17 +33,17 @@ export default function ChannelSelect({ selectedIds, onChange, error }: ChannelS
   };
 
   return (
-    <div className="w-full space-y-2">
+    <div id="ChannelSelect" className="w-full space-y-2">
       {/* Header Row with Title & Select All Action */}
       <div className="flex items-center justify-between">
-        <label className="block text-xs font-mono font-medium opacity-80">
+        <label className="block text-sm font-mono font-medium opacity-80">
           Target Output Channels (Select target feeds)
         </label>
 
         <button
           type="button"
           onClick={handleSelectAll}
-          className="text-xs font-mono text-purple-400 hover:text-purple-300 hover:underline transition-colors flex items-center gap-1"
+          className="text-sm font-mono text-purple-400 hover:text-purple-300 hover:underline transition-colors flex items-center gap-1"
         >
           <span>{isAllSelected ? '✓ Deselect All' : '＋ Select All'}</span>
         </button>
@@ -74,11 +74,11 @@ export default function ChannelSelect({ selectedIds, onChange, error }: ChannelS
                 className="mt-0.5 rounded border-[var(--elementBorder)] text-purple-600 focus:ring-purple-500 cursor-pointer"
               />
               
-              <div className="flex-1 text-xs">
+              <div className="flex-1 text-sm">
                 <div className="font-semibold text-[var(--foreground)]">
                   📺 {ch.name}
                 </div>
-                <p className="opacity-60 text-[11px] mt-0.5">{ch.description}</p>
+                <p className="opacity-60 text-sm mt-0.5">{ch.description}</p>
               </div>
             </label>
           );
@@ -87,13 +87,13 @@ export default function ChannelSelect({ selectedIds, onChange, error }: ChannelS
 
       {/* Validation Error Message */}
       {error ? (
-        <p className="text-xs font-mono text-red-400 font-medium flex items-center gap-1.5">
+        <p className="text-sm font-mono text-red-400 font-medium flex items-center gap-1.5">
           <span aria-hidden="true">⚠️</span>
           <span>{error}</span>
         </p>
       ) : (
-        <p className="text-[11px] opacity-50 font-mono">
-          Selected feeds will output this article in their respective <code className="text-purple-400">/api/rss?channel=</code> streams.
+        <p className="pt-1 text-sm opacity-60 font-mono">
+          Selected feeds will output this article at <code className="text-purple-400">/api/rss/channel</code>
         </p>
       )}
     </div>
