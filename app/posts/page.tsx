@@ -73,7 +73,7 @@ export default function PostsIndexPage() {
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
             placeholder="Search articles..."
-            className="w-full pl-8 pr-8 h-8 rounded-full border border-[var(--elementBorder)] bg-[var(--elementBg)] text-sm font-mono focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all leading-none flex items-center"
+            className="w-full pl-8 pr-8 h-8 rounded-full border border-[var(--elementBorder)] text-sm font-mono focus:outline-none focus:ring-2 focus:ring-purple-500 transition-all leading-none flex items-center"
           />
           {searchQuery && (
             <button
@@ -93,7 +93,7 @@ export default function PostsIndexPage() {
             className={`h-8 px-3 inline-flex items-center justify-center rounded-full text-sm font-mono transition-colors whitespace-nowrap shrink-0 ${
               selectedChannel === 'all'
                 ? 'bg-purple-600 text-white font-bold'
-                : 'border border-[var(--elementBorder)] bg-[var(--elementBg)] opacity-70 hover:opacity-100'
+                : 'border border-[var(--elementBorder)] opacity-70 hover:opacity-100'
             }`}
           >
             All Channels
@@ -110,7 +110,7 @@ export default function PostsIndexPage() {
                 className={`h-8 px-3 inline-flex items-center justify-center rounded-full text-sm font-mono transition-colors whitespace-nowrap shrink-0 ${
                   selectedChannel === ch.id
                     ? 'bg-purple-600 text-white font-bold'
-                    : 'border border-[var(--elementBorder)] bg-[var(--elementBg)] opacity-70 hover:opacity-100'
+                    : 'border border-[var(--elementBorder)] opacity-70 hover:opacity-100'
                 }`}
               >
                 {displayName}
@@ -122,7 +122,7 @@ export default function PostsIndexPage() {
 
       {/* Blog Cards Grid */}
       {filteredPosts.length === 0 ? (
-        <div className="p-12 text-center border border-dashed border-[var(--elementBorder)] rounded-xl bg-[var(--elementBg)] opacity-70">
+        <div className="p-12 text-center border border-dashed border-[var(--elementBorder)] rounded-xl opacity-70">
           <p className="text-base font-mono">No articles found matching "{searchQuery}"</p>
           <button
             onClick={() => { setSearchQuery(''); setSelectedChannel('all'); }}
@@ -139,7 +139,7 @@ export default function PostsIndexPage() {
             return (
               <article 
                 key={post.id} 
-                className="p-5 rounded-xl border border-[var(--elementBorder)] bg-[var(--elementBg)] flex flex-col justify-between gap-4"
+                className="p-5 rounded-xl border border-[var(--elementBorder)] flex flex-col justify-between gap-4"
               >
                 <div className="space-y-3">
                   {post.imageUrl && (

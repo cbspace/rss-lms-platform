@@ -27,7 +27,7 @@ export default function ModuleCard({
     <Link 
       href={href} 
       style={{ '--card-accent': `var(--${colour}, ${colorValue})` } as React.CSSProperties}
-      className="group p-6 rounded-lg border border-[var(--elementBorder)] bg-[var(--elementBg)] hover:border-[var(--card-accent)] transition-all flex flex-col justify-between"
+      className="group p-6 rounded-lg border border-[var(--elementBorder)] hover:border-[var(--card-accent)] transition-all flex flex-col justify-between"
     >
       <div>
         <div className="flex items-center justify-between">

@@ -57,7 +57,7 @@ export default function ChannelsPage() {
       {showAddForm && (
         <form
           onSubmit={handleCreateChannel}
-          className="p-5 rounded-xl border border-[var(--elementBorder)] bg-[var(--elementBg)] space-y-4 animate-in fade-in slide-in-from-top-2 duration-200"
+          className="p-5 rounded-xl border border-[var(--elementBorder)] space-y-4 animate-in fade-in slide-in-from-top-2 duration-200"
         >
           <h2 className="text-base font-bold text-purple-400 font-mono flex items-center gap-2">
             <span>➕ Register New Output Feed</span>
@@ -128,7 +128,7 @@ export default function ChannelsPage() {
           return (
             <div
               key={channel.id}
-              className="p-5 rounded-xl border border-[var(--elementBorder)] bg-[var(--elementBg)] flex flex-col justify-between gap-4"
+              className="p-5 rounded-xl border border-[var(--elementBorder)] flex flex-col justify-between gap-4"
             >
               <div className="space-y-2">
                 <div className="flex items-center justify-between">
