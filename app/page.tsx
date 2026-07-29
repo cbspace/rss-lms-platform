@@ -59,15 +59,15 @@ export default function Page() {
           <InfoModuleCard
             tag="02 / ROUTED"
             title="Assign Output Channels"
-            description="Articles are routed to one or multiple target course channels via multi-select channel controls."
+            description="Articles are routed to one or multiple target course channels via multi-select controls."
             colour="orange-500"
             compact
           />
           <InfoModuleCard
             tag="03 / SYNDICATED"
             title="LMS RSS Synchronization"
-            description="Selected channels automatically output live RSS 2.0 XML streams for external LMS readers."
-            colour="green-400"
+            description="Selected channels automatically output live RSS 2.0 XML streams for external readers."
+            colour="#48bb78" // Green 500 hex code
             compact
           />
         </div>
