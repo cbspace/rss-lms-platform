@@ -1,7 +1,7 @@
 // components/ChannelSelect.tsx
 'use client';
 
-import { CHANNELS } from '@/data/channels';
+import { CHANNELS } from '@/data/mock_channels';
 
 interface ChannelSelectProps {
   selectedIds: string[];

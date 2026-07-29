@@ -1,9 +1,8 @@
-// data/channels.ts
+// data/mock_channels.ts
 export interface Channel {
   id: string;
   name: string;
   description: string;
-  badgeColor?: string;
 }
 
 const DEFAULT_CHANNELS: Channel[] = [
@@ -12,7 +11,7 @@ const DEFAULT_CHANNELS: Channel[] = [
   { id: 'general', name: 'General Announcements', description: 'Department-wide technical updates' },
 ];
 
-const STORAGE_KEY = 'lms_mock_channels';
+const STORAGE_KEY = 'rss_mock_channels';
 
 function loadChannels(): Channel[] {
   if (typeof window === 'undefined') return DEFAULT_CHANNELS;

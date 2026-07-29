@@ -3,9 +3,9 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { getStoredPosts } from '../lib/PostsStorage';
+import { getStoredPosts } from '@/data/PostsStorage';
 import { type MockPost } from '@/data/mock_posts';
-import { CHANNELS } from '@/data/channels';
+import { CHANNELS } from '@/data/mock_channels';
 import TitleSection from '../components/TitleSection';
 
 export default function PostsIndexPage() {

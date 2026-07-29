@@ -5,7 +5,7 @@ import { useState } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
 import ChannelSelect from '../../components/ChannelSelect';
-import { savePost } from '../../lib/PostsStorage';
+import { savePost } from '@/data/PostsStorage';
 import { type MockPost } from '@/data/mock_posts';
 import TitleSection from '@/app/components/TitleSection';
 
@@ -32,9 +32,18 @@ export default function CreatePostPage() {
 
     setChannelError(null);
 
+  function get_date_id(date: Date = new Date()): string {
+    const yy = String(date.getFullYear()).slice(-2);
+    const mm = String(date.getMonth() + 1).padStart(2, '0'); // Months are 0-indexed
+    const dd = String(date.getDate()).padStart(2, '0');
+    const min = String(date.getMinutes()).padStart(2, '0');
+
+    return `${yy}${mm}${dd}${min}`;
+  }
+
     // Build complete MockPost object matching your interface
     const newPost: MockPost = {
-      id: Date.now().toString(),
+      id: get_date_id(),
       title: formData.title,
       author: 'Course Instructor',
       date: new Date().toISOString().split('T')[0],
@@ -43,8 +52,6 @@ export default function CreatePostPage() {
       imageUrl:
         formData.imageUrl ||
         'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80',
-      category: 'Frontend',
-      readTime: '3 min read',
       channelIds: formData.channelIds,
     };
 

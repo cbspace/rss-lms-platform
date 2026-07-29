@@ -1,7 +1,7 @@
 // lib/PostsStorage.ts
 import { MOCK_POSTS, type MockPost } from '@/data/mock_posts';
 
-const STORAGE_KEY = 'lms_mock_posts';
+const STORAGE_KEY = 'rss_mock_posts';
 
 export function getStoredPosts(): MockPost[] {
   if (typeof window === 'undefined') return MOCK_POSTS;

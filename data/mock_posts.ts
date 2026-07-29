@@ -8,8 +8,6 @@ export interface MockPost {
   summary: string;
   content: string;
   imageUrl: string;
-  category: "Frontend" | "Backend" | "EdTech" | "Ethics & AI" | "Data Structures";
-  readTime: string;
   channelIds: string[];
 }
 
@@ -26,8 +24,6 @@ When designing full-stack web applications, leveraging nested layouts allows dev
 
 Furthermore, combining Server Components with dynamic Route Handlers (/api/rss) enables seamless generation of structured RSS feeds directly from backend data sources without requiring complex separate API servers.`,
     imageUrl: "https://images.unsplash.com/photo-1555066931-4365d14bab8c?auto=format&fit=crop&w=800&q=80",
-    category: "Frontend",
-    readTime: "5 min read",
     channelIds: ["cs101", "general"]
   },
   {
@@ -42,8 +38,6 @@ Modern web standards require interactive elements like multi-select dropdowns, m
 
 Implementing semantic <article>, <header>, and <section> HTML elements ensures that assistive technologies can effortlessly parse published blog posts and educational course materials.`,
     imageUrl: "https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80",
-    category: "Frontend",
-    readTime: "4 min read",
     channelIds: ["cs101"]
   },
   {
@@ -58,8 +52,6 @@ Instead of writing verbose inline utility overrides, custom properties like var(
 
 This approach creates a consistent design language for UI elements, including channel badges, form cards, and navigation footers.`,
     imageUrl: "https://images.unsplash.com/photo-1507238691740-187a5b1d37b8?auto=format&fit=crop&w=800&q=80",
-    category: "Frontend",
-    readTime: "3 min read",
     channelIds: ["cs101", "cs102"]
   },
   {
@@ -74,8 +66,6 @@ By utilizing Next.js standalone output mode, the production Docker image only in
 
 This is especially critical when running containerized RSS publishing nodes in distributed cloud environments.`,
     imageUrl: "https://images.unsplash.com/photo-1605745341112-85968b19335b?auto=format&fit=crop&w=800&q=80",
-    category: "Backend",
-    readTime: "6 min read",
     channelIds: ["cs102"]
   },
   {
@@ -90,8 +80,6 @@ When transitioning a blog application from static mock data to a PostgreSQL data
 
 This ensures that API endpoints serving RSS XML feeds always receive strongly-typed dataset returns.`,
     imageUrl: "https://images.unsplash.com/photo-1544383835-bda2bc66a55d?auto=format&fit=crop&w=800&q=80",
-    category: "Backend",
-    readTime: "7 min read",
     channelIds: ["cs102", "general"]
   },
   {
@@ -106,8 +94,6 @@ Implementing clean telemetry standards provides operational visibility without c
 
 When external LMS platforms subscribe to your site's RSS feeds, health checks ensure upstream services detect availability status reliably.`,
     imageUrl: "https://images.unsplash.com/photo-1551288049-bebda4e38f71?auto=format&fit=crop&w=800&q=80",
-    category: "Backend",
-    readTime: "4 min read",
     channelIds: ["cs102"]
   },
   {
@@ -122,8 +108,6 @@ A multi-channel RSS server structure allows faculty members to target specific c
 
 This bridge creates an active, real-time learning environment for students across technical subjects.`,
     imageUrl: "https://images.unsplash.com/photo-1501504905252-473c47e087f8?auto=format&fit=crop&w=800&q=80",
-    category: "EdTech",
-    readTime: "5 min read",
     channelIds: ["cs101", "cs102", "general"]
   },
   {
@@ -138,8 +122,6 @@ Tagging articles with precise channel categories helps students focus on relevan
 
 Effective educational tools prioritize clarity, organization, and targeted delivery over raw data volume.`,
     imageUrl: "https://images.unsplash.com/photo-1434030216411-0b793f4b4173?auto=format&fit=crop&w=800&q=80",
-    category: "EdTech",
-    readTime: "4 min read",
     channelIds: ["general"]
   },
   {
@@ -154,8 +136,6 @@ Managing queue states and tracking visited URLs prevents infinite loops when pro
 
 Understanding these algorithmic mechanics is key to building scalable syndication crawlers and network data parsers.`,
     imageUrl: "https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?auto=format&fit=crop&w=800&q=80",
-    category: "Data Structures",
-    readTime: "8 min read",
     channelIds: ["cs102"]
   },
   {
@@ -170,8 +150,6 @@ By pairing a Hash Map for instant key lookup with a Doubly Linked List to mainta
 
 This structure ensures that high-traffic RSS feeds remain responsive and lightweight.`,
     imageUrl: "https://images.unsplash.com/photo-1558494949-ef010cbdcc31?auto=format&fit=crop&w=800&q=80",
-    category: "Data Structures",
-    readTime: "6 min read",
     channelIds: ["cs102"]
   },
   {
@@ -186,8 +164,6 @@ When building RSS publishing and syndication systems, providing clear XML feeds 
 
 Adhering to web standards fosters a respectful and sustainable digital ecosystem.`,
     imageUrl: "https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=800&q=80",
-    category: "Ethics & AI",
-    readTime: "5 min read",
     channelIds: ["general"]
   },
   {
@@ -202,8 +178,6 @@ Establishing transparent channel filtering and explicit feed output rules gives 
 
 Human oversight remains essential when automated systems deliver educational materials.`,
     imageUrl: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?auto=format&fit=crop&w=800&q=80",
-    category: "Ethics & AI",
-    readTime: "7 min read",
     channelIds: ["cs101", "general"]
   }
 ];
