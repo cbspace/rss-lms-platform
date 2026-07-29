@@ -1,11 +1,14 @@
 // app/page.tsx
-import Link from 'next/link';
+'use client';
+
+import ModuleCard from './components/ModuleCard';
+import InfoModuleCard from './components/InfoModuleCard';
 
 export default function Page() {
   return (
     <div id="home" className="space-y-6">
       {/* Welcome Banner */}
-      <section className="p-6 rounded-xl border border-[var(--elementBorder)] bg-[var(--elementBg)] space-y-4">
+      <section className="bg-[var(--elementBg)] space-y-4">
         <h1 className="text-2xl font-bold tracking-tight">
           Welcome <span aria-hidden="true">👋</span>
         </h1>
@@ -19,76 +22,49 @@ export default function Page() {
       <section className="space-y-4">
         <h2 className="text-xl font-semibold">Core System Modules</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {/* Posts Module Card */}
-          <Link 
-            href="/posts" 
-            className="group p-6 rounded-lg border border-[var(--elementBorder)] bg-[var(--elementBg)] hover:border-purple-500 transition-all flex flex-col justify-between"
-          >
-            <div>
-              <div className="flex items-center justify-between">
-                <span className="text-base font-mono uppercase tracking-wider text-purple-400 font-semibold">
-                  Article Manager (Content)
-                </span>
-                <span className="text-2xl group-hover:scale-110 transition-transform">✍️</span>
-              </div>
-              <h3 className="text-lg font-bold mt-2">Published Articles</h3>
-              <p className="text-base opacity-80 mt-2 leading-relaxed">
-                Create, manage, and inspect technical blog posts, announcements, and lab updates published across your course channels.
-              </p>
-            </div>
-            <div className="mt-6 pt-3 border-t border-[var(--elementBorder)] text-base font-medium text-purple-400 flex items-center justify-between">
-              <span>Explore Article Catalog</span>
-              <span>→</span>
-            </div>
-          </Link>
-
-          {/* Channels Module Card */}
-          <Link 
-            href="/channels" 
-            className="group p-6 rounded-lg border border-[var(--elementBorder)] bg-[var(--elementBg)] hover:border-orange-500 transition-all flex flex-col justify-between"
-          >
-            <div>
-              <div className="flex items-center justify-between">
-                <span className="text-base font-mono uppercase tracking-wider text-orange-500 font-semibold">
-                  RSS Egress (Output)
-                </span>
-                <span className="text-2xl group-hover:scale-110 transition-transform">📺</span>
-              </div>
-              <h3 className="text-lg font-bold mt-2">Output Channels</h3>
-              <p className="text-base opacity-80 mt-2 leading-relaxed">
-                Configure course-specific RSS XML output streams (e.g., CS101, CS102) to automatically sync published articles into LMS modules.
-              </p>
-            </div>
-            <div className="mt-6 pt-3 border-t border-[var(--elementBorder)] text-base font-medium text-orange-500 flex items-center justify-between">
-              <span>View Output Channels</span>
-              <span>→</span>
-            </div>
-          </Link>
+          <ModuleCard
+            href="/posts"
+            tag="Article Manager (Content)"
+            title="Published Articles"
+            description="Create, manage, and inspect technical blog posts, announcements, and lab updates published across your course channels."
+            icon="✍️"
+            actionText="Explore Article Catalog"
+            colour="purple-400"
+          />
+          <ModuleCard
+            href="/channels"
+            tag="Distribution Channels"
+            title="Course Feeds"
+            description="Configure public RSS streams, subscriber feeds, and channel metadata."
+            icon="📺"
+            actionText="Manage Channels"
+            colour="orange-500"
+          />
         </div>
       </section>
 
       {/* How the Platform Works */}
-      <section className="p-6 rounded-xl border border-[var(--elementBorder)] bg-[var(--elementBg)] space-y-4">
+      <section className="bg-[var(--elementBg)] space-y-4">
         <h2 className="text-xl font-semibold">How the Platform Works</h2>
-        
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-base">
-          <div className="p-4 rounded border border-[var(--elementBorder)] bg-[var(--background)] space-y-2">
-            <span className="font-mono text-purple-400 font-bold">01 / COMPOSED</span>
-            <h3 className="font-semibold text-base">Author Content</h3>
-            <p className="opacity-80">Instructors compose course updates and technical articles using the inline editor form.</p>
-          </div>
-
-          <div className="p-4 rounded border border-[var(--elementBorder)] bg-[var(--background)] space-y-2">
-            <span className="font-mono text-orange-400 font-bold">02 / ROUTED</span>
-            <h3 className="font-semibold text-base">Assign Output Channels</h3>
-            <p className="opacity-80">Articles are routed to one or multiple target course channels via multi-select channel controls.</p>
-          </div>
-
-          <div className="p-4 rounded border border-[var(--elementBorder)] bg-[var(--background)] space-y-2">
-            <span className="font-mono text-green-400 font-bold">03 / SYNDICATED</span>
-            <h3 className="font-semibold text-base">LMS RSS Synchronization</h3>
-            <p className="opacity-80">Selected channels automatically output live RSS 2.0 XML streams for external LMS readers.</p>
-          </div>
+          <InfoModuleCard
+            tag="01 / COMPOSED"
+            title="Author Content"
+            description="Instructors compose course updates and technical articles using the inline editor form."
+            colour="purple-400"
+          />
+          <InfoModuleCard
+            tag="02 / ROUTED"
+            title="Assign Output Channels"
+            description="Articles are routed to one or multiple target course channels via multi-select channel controls."
+            colour="orange-500"
+          />
+          <InfoModuleCard
+            tag="03 / SYNDICATED"
+            title="LMS RSS Synchronization"
+            description="Selected channels automatically output live RSS 2.0 XML streams for external LMS readers."
+            colour="green-400"
+          />
         </div>
       </section>
     </div>
