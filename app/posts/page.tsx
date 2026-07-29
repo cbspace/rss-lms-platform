@@ -97,7 +97,7 @@ export default function PostsIndexPage() {
             className={`h-8 px-3 inline-flex items-center justify-center rounded-full text-sm font-mono transition-colors whitespace-nowrap shrink-0 ${
               selectedChannel === 'all'
                 ? 'bg-purple-600 text-white font-bold'
-                : 'border border-[var(--elementBorder)] opacity-70 hover:opacity-100'
+                : 'border border-[var(--elementBorder)] hover:border-purple-600 opacity-70 hover:opacity-100'
             }`}
           >
             All Channels
@@ -114,7 +114,7 @@ export default function PostsIndexPage() {
                 className={`h-8 px-3 inline-flex items-center justify-center rounded-full text-sm font-mono transition-colors whitespace-nowrap shrink-0 ${
                   selectedChannel === ch.id
                     ? 'bg-purple-600 text-white font-bold'
-                    : 'border border-[var(--elementBorder)] opacity-70 hover:opacity-100'
+                    : 'border border-[var(--elementBorder)] hover:border-purple-600 opacity-70 hover:opacity-100'
                 }`}
               >
                 {displayName}

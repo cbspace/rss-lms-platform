@@ -5,7 +5,7 @@
   --foreground: #1a1a1a;
   --elementBackground: #42336f;
   --elementForeground: white;
-  --elementBorder:#e2e8f0;
+  --elementBorder:#d2b9da;
   --accentBackground: #c1bad8;
   --accentForeground: #42336fd3;
   --headingColour: rgb(69, 61, 61);
@@ -16,8 +16,8 @@
   --background: #1e1c1e;
   --foreground: #ededed;
   --elementBackground: #592468;
-  --elementForeground: #c6cfdc;
-  --elementBorder:#3f2239;
+  --elementForeground: #b794f4 ;
+  --elementBorder:#64315a;
   --accentBackground: #4E3D53;
   --accentForeground: #ededed;
   --headingColour: rgb(154, 190, 192);
