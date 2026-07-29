@@ -10,15 +10,26 @@ export default function AboutPage() {
         icon="📜"
         content={
           <>
-            <p>
+            <p className="pb-2">
               The full project consists of a Learning Management System (LMS) multi-channel blog authoring and RSS syndication architecture. 
               The current phase of the project is <strong>Assessment 1</strong>, where the frontend interface and interactive client authoring workflow have been completed.
             </p>
             <p>
               Connections to backend database persistence and live RSS XML feeds are currently simulated via structured client-side mock components and local state management.
+              The repository code is available at: <a className="text-purple-500" href="https://github.com/cbspace/rss-lms-platform">https://github.com/cbspace/rss-lms-platform</a>
             </p>
           </>}
       />
+      <div className="w-full mx-auto my-6">
+        <div className="relative aspect-video rounded-xl overflow-hidden border border-[var(--elementBorder)] shadow-sm">
+          <iframe
+            src="https://drive.google.com/file/d/1zrLSjLRBVzDUska35Uj2JB4oOY_grZP5/preview"
+            className="absolute top-0 left-0 w-full h-full border-0"
+            allow="autoplay"
+            allowFullScreen
+          />
+        </div>
+      </div>
 
       <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <InfoModuleCard
@@ -62,7 +73,7 @@ export default function AboutPage() {
           <InfoModuleCard
             tag="UPCOMING (ASSESSMENT 2)"
             title="Assessment 2: Backend & Database Integration"
-            description="Replacing mock datasets with PostgreSQL/Prisma models, active RSS 2.0 XML generator endpoints (`/api/rss/channel;`), operational health telemetry, and database persistence."
+            description="Replacing mock datasets with PostgreSQL/Prisma models, active RSS 2.0 XML generator endpoints (/api/rss/channel), operational health telemetry, and database persistence."
             colour="gray-400"
             heading_gap
             compact
