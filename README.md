@@ -92,7 +92,10 @@ npm run lint
 │   │   └── page.tsx            # RSS Channels management & registration
 │   ├── components/
 │   │   ├── AddChannelPanel.tsx # Collapsible channel registration form
+│   │   ├── BlogCard.tsx        # Displays a card with blog details
+│   │   ├── BlogSearchBar.tsx   # Search blogs by text or channel name
 │   │   ├── Breadcrumbs.tsx     # Route navigation breadcrumbs
+│   │   ├── ChannelCard.tsx     # Card to display details of a channel in a list
 │   │   ├── ChannelSelect.tsx   # Channel multi-select dropdown / pills
 │   │   ├── Footer.module.css
 │   │   ├── Footer.tsx

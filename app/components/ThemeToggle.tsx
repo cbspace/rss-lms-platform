@@ -7,7 +7,7 @@ export default function ThemeToggle() {
 
   return (
     <div className="flex items-center gap-3">
-      <span className="text-sm text-foreground">
+      <span className="text-base text-foreground">
         {dark ? "Dark" : "Light"} mode
       </span>
       <button

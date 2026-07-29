@@ -64,8 +64,8 @@ export default function Page() {
             compact
           />
           <InfoModuleCard
-            tag="03 / SYNDICATED"
-            title="LMS RSS Synchronization"
+            tag="03 / Live Feeds"
+            title="RSS Synchronization"
             description="Selected channels automatically output live RSS 2.0 XML streams for external readers."
             colour="#48bb78" // Green 500 hex code
             compact
