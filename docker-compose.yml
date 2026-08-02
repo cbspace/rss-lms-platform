@@ -1,0 +1,52 @@
+version: '3.8'
+
+services:
+  frontend:
+    build:
+      context: ./frontend
+      target: runner # Multi-stage build target
+    restart: unless-stopped
+    ports:
+      - "80:3000"
+    depends_on:
+      - api
+    environment:
+      - NODE_ENV=production
+    # Hot-reloading bind mounts removed for production
+
+  api:
+    build:
+      context: ./api
+      target: runner
+    restart: unless-stopped
+    ports:
+      - "8080:3000"
+    depends_on:
+      postgres:
+        condition: service_healthy # Ensures Postgres is fully ready before API starts
+    environment:
+      NODE_ENV: production
+      DATABASE_URL: ${DATABASE_URL}
+    # Hot-reloading bind mounts removed for production
+
+  postgres:
+    image: postgres:15-alpine
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+      POSTGRES_DB: ${POSTGRES_DB}
+    # Do NOT expose port 5432 to the public internet on EC2!
+    # The API container connects internally via the Docker network.
+    expose:
+      - "5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+volumes:
+  postgres_data:

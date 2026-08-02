@@ -2,11 +2,7 @@ import type { NextConfig } from "next";
 
 const nextConfig: NextConfig = {
   /* config options here */
+  output: 'standalone', // <-- REQUIRED for standalone folder generation
 };
-
-// next.config.js
-module.exports = {
-  allowedDevOrigins: ['10.0.0.119'],
-}
 
 export default nextConfig;
