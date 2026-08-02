@@ -40,4 +40,4 @@ EXPOSE 3000
 
 # Exec form using bash so wait-for-it works reliably
 ENTRYPOINT ["/bin/bash", "/app/entrypoint.sh"]
-CMD ["node", "dist/index.js"]
+CMD ["node", "server.js"]
