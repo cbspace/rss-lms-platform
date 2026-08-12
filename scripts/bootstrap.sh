@@ -17,5 +17,4 @@ cd rss-lms-platform
 echo "Setting up swap file"
 ./scripts/pagefile.sh
 
-echo "You have been bootstrapped, now run:"
-echo "make setup"
+echo "--- You have been bootstrapped, now run \"make prod\" to deploy! ---"

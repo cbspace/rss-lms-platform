@@ -1,5 +1,5 @@
 # 1. Base image for shared node dependencies
-FROM node:20-alpine AS base
+FROM node:22-alpine AS base
 
 # 2. Dependencies stage (installs all deps for building)
 FROM base AS deps
@@ -13,6 +13,10 @@ WORKDIR /app
 COPY --from=deps /app/node_modules ./node_modules
 COPY . .
 ENV NODE_ENV=production
+# Add API_URL build arg, used for API redirects
+# Must be injected prior to npm run build
+ARG API_URL
+ENV API_URL=$API_URL
 RUN npm run build
 
 # 4. Production Runner stage (lightweight final image)

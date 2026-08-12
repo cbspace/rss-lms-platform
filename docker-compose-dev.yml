@@ -1,40 +1,54 @@
 services:
   frontend:
-    build: ./frontend
+    build:
+      context: ./frontend
+      dockerfile: Dockerfile-dev
     ports:
-      - "90:3000"          # I use 90 for local dev
+      - "90:3000"                   # I use 90 for local dev, 80 is a better choice
     depends_on:
       - api
     environment:
       - NODE_ENV=development
+      - API_URL=http://api:3000     # Used for api redirect
     volumes:
       - ./frontend:/app
       - /app/node_modules  # Optional: prevents overwriting node_modules in dev
     command: npm run dev
 
   api:
-    build: ./api
-    ports:
-      - "8080:3000"
-    depends_on:
-      - postgres
-    environment:
-      NODE_ENV: development
-      DATABASE_URL: ${DATABASE_URL}
-    volumes:
-      - ./api:/app
-      - /app/node_modules/.prisma  # Optional: same as frontend
+      build:
+        context: ./api
+        dockerfile: Dockerfile-dev
+      ports:
+        - "4080:3000"
+      depends_on:
+        postgres:
+          condition: service_healthy # Ensure postgres health check passes first
+      environment:
+        NODE_ENV: development
+        DATABASE_URL: ${DATABASE_URL}
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL}
+      volumes:
+        - ./api:/app
+        # Preserve container-built node_modules & Next build cache
+        - /app/node_modules
+        - /app/.next
 
   postgres:
-    image: postgres:15
-    environment:
-      POSTGRES_USER: ${POSTGRES_USER}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
-      POSTGRES_DB: ${POSTGRES_DB}
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres_data:/var/lib/postgresql/data
+      image: postgres:15
+      environment:
+        POSTGRES_USER: ${POSTGRES_USER}
+        POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+        POSTGRES_DB: ${POSTGRES_DB}
+      ports:
+        - "5432:5432"
+      volumes:
+        - postgres_data:/var/lib/postgresql/data
+      healthcheck:
+        test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB}"]
+        interval: 5s
+        timeout: 5s
+        retries: 5
 
 volumes:
   postgres_data:

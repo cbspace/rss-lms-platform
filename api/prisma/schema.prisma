@@ -2,7 +2,7 @@
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
-  provider = "prisma-client-js"
+  provider = "prisma-client"
   output   = "app/generated/prisma/client"
 }
 
@@ -10,13 +10,37 @@ datasource db {
   provider = "postgresql"
 }
 
-model User {
-  id         String     @id @default(uuid())
-  name       String
-  lineStatus LineStatus
+
+model Channel {
+  id            String       @id @default(uuid())
+  slug          String       @unique
+  name          String?
+  description   String?
+  posts         Post[]
 }
 
-enum LineStatus {
-  online
-  offline
+model Post {    
+  id            String       @id @default(uuid())
+  postNumber    Int          @unique @default(autoincrement())
+  title         String
+  author        String
+  date          DateTime     @default(now())
+  summary       String
+  content       String
+  imageUrl      String?
+  channels      Channel[]
+}
+
+model RequestLog {
+  id           String        @id @default(uuid())
+  clientIp     String
+  endpoint     String
+  feedSlug     String?
+  timestamp    DateTime      @default(now())
+}
+
+model MetricSummary {
+  id           String        @id @default("global")
+  totalCount   Int           @default(0)
+  lastUpdated  DateTime      @updatedAt
 }

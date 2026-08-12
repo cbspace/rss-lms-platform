@@ -1,8 +1,12 @@
-// components/BlogSearchBar.tsx
 'use client';
 
-import React from 'react';
-import { CHANNELS, type Channel } from '@/data/mock_channels';
+import React, { useState, useEffect } from 'react';
+
+export type Channel = {
+  id: string;
+  slug: string;
+  name: string;
+};
 
 export interface BlogSearchBarProps {
   searchQuery: string;
@@ -17,8 +21,33 @@ export default function BlogSearchBar({
   onSearchChange,
   selectedChannel,
   onChannelSelect,
-  channels = CHANNELS,
+  channels: passedChannels,
 }: BlogSearchBarProps) {
+  const [internalChannels, setInternalChannels] = useState<Channel[]>([]);
+
+  // Fetch live channels from API if no channels prop is explicitly provided
+  useEffect(() => {
+    if (passedChannels && passedChannels.length > 0) return;
+
+    async function fetchChannels() {
+      try {
+        const res = await fetch('/api/rss');
+        if (res.ok) {
+          const data = await res.json();
+          setInternalChannels(data);
+        }
+      } catch (err) {
+        console.error('Failed to fetch channels in BlogSearchBar:', err);
+      }
+    }
+
+    fetchChannels();
+  }, [passedChannels]);
+
+  const activeChannels = passedChannels && passedChannels.length > 0 
+    ? passedChannels 
+    : internalChannels;
+
   return (
     <div className="flex flex-col sm:flex-row items-center gap-3 w-full">
       {/* Search Input Box */}
@@ -52,11 +81,14 @@ export default function BlogSearchBar({
           className="w-full h-9 px-3 pr-8 rounded-lg border border-[var(--elementBorder)] bg-[var(--background)] text-sm font-mono font-medium text-[var(--foreground)] focus:outline-none focus:ring-2 focus:ring-purple-500 cursor-pointer appearance-none transition-all"
         >
           <option value="all">📺 All Channels</option>
-          {channels.map((ch) => (
-            <option key={ch.id} value={ch.id}>
-              {ch.name}
-            </option>
-          ))}
+          {activeChannels.map((ch) => {
+            const channelValue = ch.slug || ch.id;
+            return (
+              <option key={ch.id || ch.slug} value={channelValue}>
+                {ch.name}
+              </option>
+            );
+          })}
         </select>
         {/* Custom Chevron Icon */}
         <span className="absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none text-xs opacity-60">

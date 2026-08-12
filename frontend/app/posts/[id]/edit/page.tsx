@@ -1,13 +1,18 @@
-// app/posts/create/page.tsx
+// app/posts/[id]/edit/page.tsx
 'use client';
 
-import { useState } from 'react';
+import { use, useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
-import ChannelSelect from '../../components/ChannelSelect';
+import ChannelSelect from '@/app/components/ChannelSelect';
 import TitleSection from '@/app/components/TitleSection';
 
-export default function CreatePostPage() {
+interface EditPostPageProps {
+  params: Promise<{ id: string }>;
+}
+
+export default function EditPostPage({ params }: EditPostPageProps) {
+  const { id } = use(params);
   const router = useRouter();
 
   const [formData, setFormData] = useState({
@@ -18,16 +23,42 @@ export default function CreatePostPage() {
     imageUrl: '',
   });
 
+  const [loading, setLoading] = useState(true);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const [channelError, setChannelError] = useState<string | null>(null);
   const [submitError, setSubmitError] = useState<string | null>(null);
-  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  // Fetch initial post details
+  useEffect(() => {
+    async function loadPost() {
+      try {
+        setLoading(true);
+        const res = await fetch(`/api/posts/${id}?json=true`);
+        if (!res.ok) throw new Error('Failed to load post');
+
+        const post = await res.json();
+        setFormData({
+          title: post.title || '',
+          author: post.author || '',
+          summary: post.summary || post.content || '',
+          imageUrl: post.imageUrl || '',
+          channelIds: (post.channels || []).map((c: any) => c.slug || c.id),
+        });
+      } catch (err: any) {
+        setSubmitError('Unable to load post details for editing.');
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadPost();
+  }, [id]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    // Validate channel selection
     if (formData.channelIds.length === 0) {
-      setChannelError('Please select at least one RSS channel before publishing.');
+      setChannelError('Please select at least one RSS channel before updating.');
       return;
     }
 
@@ -36,8 +67,8 @@ export default function CreatePostPage() {
     setIsSubmitting(true);
 
     try {
-      const response = await fetch('/api/posts', {
-        method: 'POST',
+      const response = await fetch(`/api/posts/${id}`, {
+        method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
         },
@@ -46,41 +77,41 @@ export default function CreatePostPage() {
           author: formData.author.trim() || 'Course Instructor',
           summary: formData.summary.trim(),
           content: formData.summary.trim(),
-          imageUrl:
-            formData.imageUrl.trim() ||
-            'https://images.unsplash.com/photo-1517694712202-14dd9538aa97?auto=format&fit=crop&w=800&q=80',
-          channelSlugs: formData.channelIds, // Array of selected channel slugs/IDs
+          imageUrl: formData.imageUrl.trim(),
+          channelSlugs: formData.channelIds,
         }),
       });
 
       const data = await response.json();
 
       if (!response.ok) {
-        throw new Error(data.error || 'Failed to publish post');
+        throw new Error(data.error || 'Failed to update post');
       }
 
-      // Redirect to main catalog on success
-      router.push('/posts');
+      // Return to post detail page
+      router.push(`/posts/${id}`);
     } catch (err: any) {
-      console.error('Error creating post:', err);
-      setSubmitError(err.message || 'An error occurred while publishing the post.');
+      console.error('Error updating post:', err);
+      setSubmitError(err.message || 'An error occurred while updating the post.');
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  if (loading) {
+    return (
+      <div className="w-full max-w-3xl mx-auto p-12 text-center font-mono opacity-60">
+        Loading post data for editing...
+      </div>
+    );
+  }
+
   return (
-    <div id="create_post" className="w-full max-w-3xl mx-auto space-y-6 pb-10">
+    <div id="edit_post" className="w-full max-w-3xl mx-auto space-y-6 pb-6">
       <TitleSection
-        title="Create New Post"
-        icon="🖋️"
-        content={
-          <>
-            <p>
-              Create and new post and publish it across single or multiple RSS channels.
-            </p>
-          </>
-        }
+        title="Edit Post"
+        icon="✏️"
+        content={<p>Modify your published post details and RSS channel allocations.</p>}
       />
 
       {submitError && (
@@ -91,7 +122,7 @@ export default function CreatePostPage() {
 
       <form
         onSubmit={handleSubmit}
-        className="p-6 rounded-xl border border-[var(--elementBorder)] bg-[var(--elementBg)] space-y-5"
+        className="p-6 rounded-xl border border-element-border bg-[var(--elementBg)] space-y-5"
       >
         {/* Title */}
         <div>
@@ -104,8 +135,7 @@ export default function CreatePostPage() {
             required
             value={formData.title}
             onChange={(e) => setFormData({ ...formData, title: e.target.value })}
-            placeholder="Short Post Title"
-            className="w-full p-2.5 rounded-lg border border-[var(--elementBorder)] bg-[var(--background)] text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full p-2.5 rounded-lg border border-element-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
           />
         </div>
 
@@ -120,7 +150,7 @@ export default function CreatePostPage() {
             value={formData.author}
             onChange={(e) => setFormData({ ...formData, author: e.target.value })}
             placeholder="Course Instructor"
-            className="w-full p-2.5 rounded-lg border border-[var(--elementBorder)] bg-[var(--background)] text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full p-2.5 rounded-lg border border-element-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
           />
         </div>
 
@@ -134,8 +164,7 @@ export default function CreatePostPage() {
             type="url"
             value={formData.imageUrl}
             onChange={(e) => setFormData({ ...formData, imageUrl: e.target.value })}
-            placeholder="https://images.unsplash.com/..."
-            className="w-full p-2.5 rounded-lg border border-[var(--elementBorder)] bg-[var(--background)] text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
+            className="w-full p-2.5 rounded-lg border border-element-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-purple-500"
           />
         </div>
 
@@ -150,12 +179,11 @@ export default function CreatePostPage() {
             rows={5}
             value={formData.summary}
             onChange={(e) => setFormData({ ...formData, summary: e.target.value })}
-            placeholder="Write your announcement or Post content..."
-            className="w-full p-2.5 rounded-lg border border-[var(--elementBorder)] bg-[var(--background)] text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 leading-relaxed"
+            className="w-full p-2.5 rounded-lg border border-element-border bg-background text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 leading-relaxed"
           />
         </div>
 
-        {/* Channel Selection with Validation Prop */}
+        {/* Channel Selection */}
         <ChannelSelect
           selectedIds={formData.channelIds}
           error={channelError}
@@ -165,9 +193,9 @@ export default function CreatePostPage() {
           }}
         />
 
-        {/* Form Actions */}
+        {/* Actions */}
         <div className="pt-2 flex justify-between items-center">
-          <Link href="/posts" className="text-sm text-purple-400 hover:underline font-medium">
+          <Link href={`/posts/${id}`} className="text-sm text-purple-400 hover:underline font-medium">
             ← Cancel
           </Link>
 
@@ -176,7 +204,7 @@ export default function CreatePostPage() {
             disabled={isSubmitting}
             className="px-4 py-2 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-sm font-semibold shadow-sm transition-colors disabled:opacity-50"
           >
-            {isSubmitting ? 'Publishing...' : 'Publish Post & Update RSS Feeds'}
+            {isSubmitting ? 'Saving Changes...' : 'Save & Update Post'}
           </button>
         </div>
       </form>

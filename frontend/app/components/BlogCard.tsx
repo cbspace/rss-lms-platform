@@ -1,25 +1,43 @@
 // components/BlogCard.tsx
 'use client';
 
-import React from 'react';
 import Link from 'next/link';
-import { type MockPost } from '@/data/mock_posts';
-import { CHANNELS, type Channel } from '@/data/mock_channels';
 
-export interface BlogCardProps {
-  post: MockPost;
+export type Channel = {
+  id: string;
+  slug: string;
+  name: string;
+};
+
+export type Post = {
+  id: string;
+  postNumber: number;
+  title: string;
+  author: string;
+  date: string;
+  summary: string;
+  content: string;
+  imageUrl?: string;
+  channels?: { id?: string; slug: string; name: string }[]; // Added id?: string
+  channelIds?: string[];
+};
+
+type BlogCardProps = {
+  post: Post;
   channels?: Channel[];
-}
+};
 
-export default function BlogCard({ post, channels = CHANNELS }: BlogCardProps) {
+export function BlogCard({ post, channels = [] }: BlogCardProps) {
   const postChannelIds: string[] = post.channelIds || [];
-  const cleanId = post.id.replace(/^post-/, '');
+
+  // Use postNumber for user-facing clean URL slug (e.g., /posts/42)
+  const slugIdentifier = post.postNumber ?? post.id.replace(/^post-/, '');
 
   return (
-    <article className="p-5 rounded-xl border border-[var(--elementBorder)] bg-[var(--elementBg)] flex flex-col justify-between gap-4">
+    <article className="p-5 rounded-xl border border-element-border flex flex-col justify-between gap-4">
       <div className="space-y-3">
         {post.imageUrl && (
-          <div className="w-full h-40 rounded-lg overflow-hidden border border-[var(--elementBorder)] bg-[var(--background)]">
+          <div className="w-full h-40 rounded-lg overflow-hidden border border-element-border bg-background">
             <img
               src={post.imageUrl}
               alt={post.title}
@@ -41,10 +59,10 @@ export default function BlogCard({ post, channels = CHANNELS }: BlogCardProps) {
 
       <div className="pt-3 flex items-center justify-between gap-2">
         <Link
-          href={`/posts/${cleanId}`}
+          href={`/posts/post-${slugIdentifier}`}
           className="text-sm font-semibold text-purple-400 hover:underline flex items-center gap-1 shrink-0"
         >
-          <span>Read Full Article</span>
+          <span>View / Edit</span>
           <span aria-hidden="true">→</span>
         </Link>
 

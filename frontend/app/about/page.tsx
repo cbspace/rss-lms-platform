@@ -32,38 +32,46 @@ export default function AboutPage() {
           heading_gap
         />
         <InfoModuleCard
-          tag="🎨 Assessment 1 Highlights"
-          title="Key Client Capabilities"
+          tag="⚡ Assessment 2 Highlights"
+          title="Key Full-Stack & Server Capabilities"
           description={[
-                        "Multi-channel publishing controls with select-all capabilities",
-                        "Client-side form validation with interactive warning states",
-                        "Interactive channel filter pills with dynamic card badges",
-                        "Dynamic dark/light theme switching via CSS variables",
-                        "WCAG 2.2 accessible structure with semantic HTML"
-                      ]}
+            "PostgreSQL & Prisma ORM database persistence",
+            "Valid RSS 2.0 XML feed engine",
+            "RESTful API endpoints supporting post id and postNumber",
+            "User-friendly conflict handling for duplicate channel slugs (P2002)",
+            "Operational health telemetry, live metric tracking and development dashbaord"
+          ]}
           colour="orange-400"
           heading_gap
         />
       </section>
 
       {/* Project Roadmap */}
-      <section className="space-y-4">
+      <section className="space-y-4 pb-6">
         <h2 className="text-lg font-semibold flex items-center gap-2">
           <span>🗺️</span> Implementation Roadmap
         </h2>
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-base">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-4 text-base">
           <InfoModuleCard
-            tag="CURRENT PHASE"
+            tag="COMPLETED"
             title="Assessment 1: Frontend & UI Simulation"
             description="Complete layout structure, Next.js App Router setup, interactive multi-channel selection, mock data publishing, theme toggling, and client state simulation."
+            colour="emerald-400"
+            heading_gap
+            compact
+          />
+          <InfoModuleCard
+            tag="Current PHase"
+            title="Assessment 2: Backend, Database and API Integration"
+            description="Docker containerisation of backend, replaced mock datasets with Prisma models, active RSS 2.0 XML endpoints, RESTful CRUD API routes."
             colour="purple-400"
             heading_gap
             compact
           />
           <InfoModuleCard
-            tag="UPCOMING (ASSESSMENT 2)"
-            title="Assessment 2: Backend & Database Integration"
-            description="Replacing mock datasets with PostgreSQL/Prisma models, active RSS 2.0 XML generator endpoints (/api/rss/channel), operational health telemetry, and database persistence."
+            tag="UPCOMING (ASSESSMENT 3)"
+            title="Assessment 3: Observability, Metrics & Testing"
+            description="Operational health telemetry, database-persisted analytics dashboard, automated Playwright E2E tests, JMeter load testing, and Lighthouse WCAG auditing."
             colour="gray-400"
             heading_gap
             compact

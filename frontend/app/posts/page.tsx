@@ -3,23 +3,55 @@
 
 import { useState, useEffect } from 'react';
 import Link from 'next/link';
-import { getStoredPosts } from '@/data/PostsStorage';
-import { type MockPost } from '@/data/mock_posts';
-import { CHANNELS } from '@/data/mock_channels';
 import TitleSection from '../components/TitleSection';
 import BlogSearchBar from '../components/BlogSearchBar';
-import BlogCard from '../components/BlogCard';
+import { BlogCard, Channel, Post } from '../components/BlogCard';
 
 export default function PostsIndexPage() {
-  const [posts, setPosts] = useState<MockPost[]>([]);
+  const [posts, setPosts] = useState<Post[]>([]);
+  const [channels, setChannels] = useState<Channel[]>([]);
+  const [loading, setLoading] = useState<boolean>(true);
   const [selectedChannel, setSelectedChannel] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
 
+  // Fetch posts and channels from backend API
   useEffect(() => {
-    setPosts(getStoredPosts());
+    async function loadData() {
+      try {
+        setLoading(true);
+        const [postsRes, channelsRes] = await Promise.all([
+          fetch('/api/posts'),
+          fetch('/api/rss'),
+        ]);
+
+        if (postsRes.ok) {
+          const rawPosts = await postsRes.json();
+          // Normalize Prisma channel objects to a simple channelIds array for UI filters
+          const formattedPosts = rawPosts.map((post: any) => ({
+            ...post,
+            date: post.date ? new Date(post.date).toISOString().split('T')[0] : '',
+            channelIds: post.channels
+              ? post.channels.map((ch: any) => ch.slug || ch.id)
+              : [],
+          }));
+          setPosts(formattedPosts);
+        }
+
+        if (channelsRes.ok) {
+          const channelsData = await channelsRes.json();
+          setChannels(channelsData);
+        }
+      } catch (err) {
+        console.error('Failed to load posts or channels from API:', err);
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    loadData();
   }, []);
 
-  // Filter posts using local state and search query
+// Filter posts using API state and search query
   const filteredPosts = posts.filter((post) => {
     const postChannels = post.channelIds || [];
 
@@ -29,18 +61,31 @@ export default function PostsIndexPage() {
 
     // 2. Search Query Filter
     const query = searchQuery.toLowerCase().trim();
+    
+    // Strip leading "post-" or "#" so searching "post-2", "#2", or "2" matches postNumber 2
+    const queryCleanNumber = query.replace(/^(post-|\#)/i, '');
+
+    const matchesPostNumber =
+      post.postNumber !== undefined &&
+      (post.postNumber.toString() === queryCleanNumber ||
+       `post-${post.postNumber}`.includes(query) ||
+       `#${post.postNumber}`.includes(query));
+
     const matchesSearch =
       query === '' ||
+      matchesPostNumber ||
       post.title.toLowerCase().includes(query) ||
-      post.summary.toLowerCase().includes(query) ||
-      post.date.toLowerCase().includes(query) ||
+      (post.summary && post.summary.toLowerCase().includes(query)) ||
+      (post.date && post.date.toLowerCase().includes(query)) ||
       postChannels.some((chId) => chId.toLowerCase().includes(query));
 
     return matchesChannel && matchesSearch;
   });
 
   // Determine channel display name for empty state messaging
-  const activeChannelObj = CHANNELS.find((ch) => ch.id === selectedChannel);
+  const activeChannelObj = channels.find(
+    (ch) => ch.slug === selectedChannel || ch.id === selectedChannel
+  );
   const activeChannelName = activeChannelObj ? activeChannelObj.name : selectedChannel;
 
   // Dynamic empty state message
@@ -92,8 +137,12 @@ export default function PostsIndexPage() {
         </div>
       </div>
 
-      {/* Blog Cards Grid */}
-      {filteredPosts.length === 0 ? (
+      {/* Loading Indicator or Blog Cards Grid */}
+      {loading ? (
+        <div className="p-12 text-center border border-dashed border-[var(--elementBorder)] bg-[var(--elementBg)] rounded-xl opacity-80">
+          <p className="text-base font-mono">Loading posts from database...</p>
+        </div>
+      ) : filteredPosts.length === 0 ? (
         <div className="p-12 text-center border border-dashed border-[var(--elementBorder)] bg-[var(--elementBg)] rounded-xl opacity-80 space-y-2">
           <p className="text-base font-mono">{emptyStateMessage()}</p>
           <button
@@ -109,7 +158,7 @@ export default function PostsIndexPage() {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
           {filteredPosts.map((post) => (
-            <BlogCard key={post.id} post={post} />
+            <BlogCard key={post.id} post={post as any} />
           ))}
         </div>
       )}

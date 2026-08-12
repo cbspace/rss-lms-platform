@@ -5,7 +5,7 @@
 
 # Run Prisma commands
 npx prisma generate
-npx prisma migrate deploy
+npx prisma db push
 
 # Start the app
 npm run dev

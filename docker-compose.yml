@@ -1,10 +1,11 @@
-version: '3.8'
-
 services:
   frontend:
+    container_name: frontend
     build:
       context: ./frontend
       target: runner # Multi-stage build target
+      args:
+        - API_URL=http://api:3000   # Pass as arg to use in the static node build
     restart: unless-stopped
     ports:
       - "80:3000"
@@ -15,19 +16,23 @@ services:
     # Hot-reloading bind mounts removed for production
 
   api:
+    container_name: api
     build:
       context: ./api
       target: runner
+      args:
+        DATABASE_URL: ${DATABASE_URL}  # Pass as arg to use in the static node build
+        NEXT_PUBLIC_SITE_URL: ${NEXT_PUBLIC_SITE_URL}
     restart: unless-stopped
     ports:
-      - "8080:3000"
+      - "4080:3000"
     depends_on:
       postgres:
-        condition: service_healthy # Ensures Postgres is fully ready before API starts
+        condition: service_healthy     # Ensures Postgres is fully ready before API starts
     environment:
       NODE_ENV: production
       DATABASE_URL: ${DATABASE_URL}
-    # Hot-reloading bind mounts removed for production
+      HOSTNAME: "0.0.0.0"
 
   postgres:
     image: postgres:15-alpine

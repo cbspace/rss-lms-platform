@@ -19,6 +19,6 @@ sudo docker-compose --version
 # Install Updated Buildx
 ARCH=$(uname -m | sed -e 's/x86_64/amd64/' -e 's/aarch64/arm64/')
 sudo mkdir -p /usr/libexec/docker/cli-plugins
-sudo curl -SL "https://github.com/docker/buildx/releases/download/v0.17.1/buildx-v0.17.1.linux-$ARCH" -o /usr/libexec/docker/cli-plugins/docker-buildx
+sudo curl -SL "https://github.com/docker/buildx/releases/download/v0.20.1/buildx-v0.20.1.linux-$ARCH" -o /usr/libexec/docker/cli-plugins/docker-buildx
 sudo chmod +x /usr/libexec/docker/cli-plugins/docker-buildx
 sudo docker buildx version

@@ -20,7 +20,7 @@ export default function TitleSection({
   const bodyContent = content ?? children;
 
   return (
-    <section className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-xl border border-[var(--elementBorder)]">
+    <section className="p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-4 rounded-xl border border-element-border">
       {/* Left Text Block (Title + Content) */}
       <div className="space-y-4">
         <h1 className="text-2xl font-bold tracking-tight">
