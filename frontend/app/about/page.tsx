@@ -39,6 +39,7 @@ export default function AboutPage() {
             "Valid RSS 2.0 XML feed engine",
             "RESTful API endpoints supporting post id and postNumber",
             "User-friendly conflict handling for duplicate channel slugs (P2002)",
+            "RSS Feed Viewer",
             "Operational health telemetry, live metric tracking and development dashbaord"
           ]}
           colour="orange-400"

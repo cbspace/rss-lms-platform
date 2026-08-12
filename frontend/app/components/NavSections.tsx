@@ -47,6 +47,7 @@ export default function NavSections() {
         <Link className={styles.navLink} href="/about" onClick={closeMenu}>About</Link>
         <Link className={styles.navLink} href="/posts" onClick={closeMenu}>Posts</Link>
         <Link className={styles.navLink} href="/channels" onClick={closeMenu}>Channels</Link>
+        <Link className={styles.navLink} href="/reader" onClick={closeMenu}>Reader</Link>
         <Link className={styles.navLink} href="/settings" onClick={closeMenu}>Settings</Link>
         <Link className={styles.navLink} href="/dev" onClick={closeMenu}>Dev Tools</Link>
       </nav>

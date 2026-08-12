@@ -2,9 +2,10 @@
 sudo yum install git -y
 git -v
 
-# Clone the repo
-git config --global user.name "cbspace"
-git config --global user.email "24204459+cbspace@users.noreply.github.com"
+# Clone the repo and setup GIT credentials
+# Add your credentials and uncomment lines
+# git config --global user.name "my_name"
+# git config --global user.email "my_email"
 git clone https://github.com/cbspace/rss-lms-platform.git
 
 # Install make
@@ -17,4 +18,4 @@ cd rss-lms-platform
 echo "Setting up swap file"
 ./scripts/pagefile.sh
 
-echo "--- You have been bootstrapped, now run \"make prod\" to deploy! ---"
+echo "--- You have been bootstrapped, now run \"make setup\" then \"make prod\" to deploy! ---"

@@ -134,6 +134,7 @@ make prod
 | `/posts` | **Articles & Post Manager** | List all articles, filter by channel, and publish new posts directly via inline controls. |
 | `/posts/[id]` | **Post Reader** | Full article detail view, editing and deletion `[id]` can be a postNumber or guid |
 | `/channels` | **RSS Output Feeds** | Register, inspect, and manage available RSS distribution channels. |
+| `/reader` | **RSS Feed Client** | View an RSS feed fron the RSS Server. |
 | `/dev` | **Dev Test Dashboard** | Live outgoing request inspector, telemetry tester, and manual API execution suite. |
 | `/about` | **About Platform** | Architecture overview, assessment scope breakdown, and technical specifications. |
 | `/settings` | **Preferences** | Manage interface preferences and theme states. |
@@ -198,6 +199,7 @@ docker compose up -d --build frontend
 - [x] Dynamic RSS 2.0 XML generator (`/api/rss/[slug]`) with Atom self-links and enclosure image tags.
 - [x] RESTful API endpoints for post management supporting dual `postNumber` and `guid` lookups.
 - [x] Automated Cloudflare Zero Trust Tunnel deployment with Full SSL/TLS encryption.
+- [x] RSS Feed Client/Viewer
 
 ### Phase 3: Observability, Metrics & Testing (Assessment 3)
 - [ ] Database-backed telemetry service tracking request counts, feed usage, and unique client IPs (`/api/count`).
