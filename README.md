@@ -187,13 +187,13 @@ docker compose up -d --build frontend
 
 ## 🗺️ Roadmap & Next Steps
 
-### Phase 1: Frontend & UI Design (Assessment 1)
+### Phase 1: Frontend & UI Design (Assessment 1)  - [View Files](https://github.com/cbspace/rss-lms-platform/tree/90180d9df69461879141e744aa096f69c5bcca12)
 - [x] Dynamic layout structure with Next.js App Router and React 19.
 - [x] Multi-channel publishing controls with select-all capabilities.
 - [x] Responsive component architecture with theme switching (CSS variables).
 - [x] Client-side form validation with interactive state indicators.
 
-### Phase 2: Backend, Database & Infrastructure (Assessment 2)
+### Phase 2: Backend, Database & Infrastructure (Assessment 2) - [View Files](https://github.com/cbspace/rss-lms-platform/tree/ca2de939c0b1c79fce5f1a4c3fb99dfdc05ccfe7)
 - [x] Multi-container Docker architecture (`docker-compose.yml` & `docker-compose-dev.yml`).
 - [x] PostgreSQL database persistence with Prisma ORM (`@prisma/adapter-pg`).
 - [x] Dynamic RSS 2.0 XML generator (`/api/rss/[slug]`) with Atom self-links and enclosure image tags.
@@ -202,7 +202,7 @@ docker compose up -d --build frontend
 - [x] RSS Feed Client/Viewer
 
 ### Phase 3: Observability, Metrics & Testing (Assessment 3)
-- [ ] Database-backed telemetry service tracking request counts, feed usage, and unique client IPs (`/api/count`).
+- [x] Database-backed telemetry service tracking request counts, feed usage, and unique client IPs (`/api/count`).
 - [ ] Real-time operational healthcheck endpoint returning `200 OK` (`/api/health`).
 - [ ] Live telemetry dashboard with auto-refreshing operational indicators.
 - [ ] Playwright End-to-End test suites covering Server CRUD operations and Client feed retrieval.
