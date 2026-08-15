@@ -1,6 +1,8 @@
+// app/dev/page.tsx
 "use client";
 
 import { useState, useEffect } from "react";
+import TitleSection from "../components/TitleSection";
 
 export default function DevTestPage() {
   const [mounted, setMounted] = useState(false);
@@ -16,10 +18,6 @@ export default function DevTestPage() {
     body?: any;
     timestamp?: string;
   } | null>(null);
-
-  // Metrics State
-  const [metrics, setMetrics] = useState<any>(null);
-  const [autoRefresh, setAutoRefresh] = useState(true);
 
   // Form State for Channel Creation
   const [newChannelSlug, setNewChannelSlug] = useState("cs101");
@@ -38,27 +36,6 @@ export default function DevTestPage() {
   useEffect(() => {
     setMounted(true);
   }, []);
-
-  // Fetch /api/count specifically for top metrics summary
-  async function fetchMetrics() {
-    try {
-      const res = await fetch("/api/count");
-      if (res.ok) {
-        const data = await res.json();
-        setMetrics(data);
-      }
-    } catch (err) {
-      console.error("Failed to load request metrics:", err);
-    }
-  }
-
-  useEffect(() => {
-    if (!mounted) return;
-    fetchMetrics();
-    if (!autoRefresh) return;
-    const interval = setInterval(fetchMetrics, 3000);
-    return () => clearInterval(interval);
-  }, [autoRefresh, mounted]);
 
   // Request executor with Request Inspection
   async function executeRequest(url: string, options?: RequestInit) {
@@ -98,8 +75,6 @@ export default function DevTestPage() {
         const text = await res.text();
         setResponse(text);
       }
-
-      fetchMetrics();
     } catch (err: any) {
       setStatus(500);
       setResponse({ error: "Fetch failed", details: err.message });
@@ -121,63 +96,15 @@ export default function DevTestPage() {
   return (
     <div id="dev_dashboard" className="w-full max-w-6xl mx-auto space-y-6 pb-10">
       {/* HEADER SECTION */}
-      <div className="space-y-1">
-        <h1 className="text-2xl font-bold tracking-tight text-foreground">
-          🛠️ RSS Server API Test Dashboard
-        </h1>
-        <p className="text-base opacity-70">
-          Trigger API actions on the left and observe outgoing requests and server responses in real-time.
-        </p>
-      </div>
-
-      {/* METRICS HEADER BANNER */}
-      <div className="p-5 rounded-xl border border-element-border space-y-4">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
-          <h2 className="text-base font-semibold text-foreground font-mono flex items-center gap-2">
-            <span>📊</span> Operational Metrics Summary (/api/count)
-          </h2>
-          <label className="text-sm font-mono opacity-80 cursor-pointer flex items-center gap-2 select-none">
-            <input
-              type="checkbox"
-              checked={autoRefresh}
-              onChange={(e) => setAutoRefresh(e.target.checked)}
-              className="rounded border-element-border text-purple-600 focus:ring-purple-500 cursor-pointer"
-            />
-            Auto-refresh metrics (3s)
-          </label>
-        </div>
-
-        {metrics ? (
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
-            <div className="p-3 rounded-lg bg-field-background border border-element-border border-l-4 border-l-purple-500">
-              <div className="text-[12px] font-mono opacity-80 uppercase tracking-wider">Total Requests</div>
-              <div className="text-xl font-bold font-mono text-foreground mt-0.5">
-                {metrics.metrics?.totalRequests ?? metrics.summary?.totalRequests ?? 0}
-              </div>
-            </div>
-            <div className="p-3 rounded-lg bg-field-background border border-element-border border-l-4 border-l-purple-500">
-              <div className="text-[12px] font-mono opacity-80 uppercase tracking-wider">Unique Clients</div>
-              <div className="text-xl font-bold font-mono text-foreground mt-0.5">
-                {metrics.metrics?.uniqueClientsCount ?? 0}
-              </div>
-            </div>
-            <div className="p-3 rounded-lg bg-field-background border border-element-border border-l-4 border-l-purple-500">
-              <div className="text-[12px] font-mono opacity-80 uppercase tracking-wider">Total Feeds</div>
-              <div className="text-xl font-bold font-mono text-foreground mt-0.5">
-                {metrics.metrics?.totalFeeds ?? 0}
-              </div>
-            </div>
-            <div className="p-3 rounded-lg bg-field-background border border-element-border border-l-4 border-l-purple-500">
-              <div className="text-[12px] font-mono opacity-80 uppercase tracking-wider">Total Posts</div>
-              <div className="text-xl font-bold font-mono text-foreground mt-0.5">
-                {metrics.metrics?.totalPosts ?? 0}
-              </div>
-            </div>
-          </div>
-        ) : (
-          <div className="text-sm font-mono opacity-50 py-2">Loading server metrics...</div>
-        )}
-      </div>
+      <TitleSection
+        title="RSS Server API Test Dashboard"
+        icon="🛠️"
+        content={
+          <p>
+            Trigger API actions on the left and observe outgoing requests and server responses in real-time.
+          </p>
+        }
+      />
 
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
         {/* LEFT COLUMN: ACTION CONTROLS */}
