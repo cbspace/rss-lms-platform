@@ -20,16 +20,6 @@ export default function AboutPage() {
             </p>
           </>}
       />
-      <div className="w-full mx-auto my-6">
-        <div className="relative aspect-video rounded-xl overflow-hidden border border-element-border shadow-sm">
-          <iframe
-            src="https://drive.google.com/file/d/1AjhEc74vXC0oaqb9De5801nS4QvivB83/preview"
-            className="absolute top-0 left-0 w-full h-full border-0"
-            allow="autoplay"
-            allowFullScreen
-          />
-        </div>
-      </div>
       <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <InfoModuleCard
           tag="⚙️ Scope & Intent"
