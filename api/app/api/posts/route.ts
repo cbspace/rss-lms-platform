@@ -1,7 +1,7 @@
 // app/api/posts/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { recordSpan } from "@/lib/telemetry";
+import { recordSpan, resetFeedWarning } from "@/lib/telemetry";
 
 // ==========================================
 // 1. GET: Fetch All Posts (Ordered by newest)
@@ -116,6 +116,20 @@ export async function POST(request: NextRequest) {
         },
       },
     });
+
+    // If post is attached to channels, purge the EMPTY_FEED warnings
+    if (validSlugs.length > 0) {
+      // 1. Remove past EMPTY_FEED warning spans from DB for these channels
+      await prisma.telemetrySpan.deleteMany({
+        where: {
+          feedSlug: { in: validSlugs },
+          errorType: "EMPTY_FEED",
+        },
+      });
+
+      // 2. Clear the in-memory cache for each slug
+      validSlugs.forEach((slug) => resetFeedWarning(slug));
+    }
 
     await recordSpan({
       req: request,

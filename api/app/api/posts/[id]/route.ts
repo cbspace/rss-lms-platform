@@ -1,7 +1,7 @@
 // app/api/posts/[id]/route.ts
 import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
-import { recordSpan } from "@/lib/telemetry";
+import { recordSpan, resetFeedWarning } from "@/lib/telemetry";
 
 type RouteParams = {
   params: Promise<{ id: string }>;
@@ -174,6 +174,22 @@ export async function PUT(request: NextRequest, { params }: RouteParams) {
         },
       },
     });
+
+    // 3. Purge EMPTY_FEED warnings for newly linked/active channels
+    const connectedSlugs = updatedPost.channels
+      .map((ch) => ch.slug)
+      .filter(Boolean);
+
+    if (connectedSlugs.length > 0) {
+      await prisma.telemetrySpan.deleteMany({
+        where: {
+          feedSlug: { in: connectedSlugs },
+          errorType: "EMPTY_FEED",
+        },
+      });
+
+      connectedSlugs.forEach((slug) => resetFeedWarning(slug));
+    }
 
     await recordSpan({
       req: request,
