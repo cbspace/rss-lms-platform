@@ -1,19 +1,75 @@
+// app/dashboard/useMetricsDashboard.ts
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
 
 export interface HealthData {
   status: string;
+  version?: string;
+  environment?: string;
+  commitSha?: string;
   uptime?: number;
   timestamp?: string;
-  database?: string | { status: string; latencyMs?: number };
-  version?: string;
+  database?: {
+    status: string;
+    latencyMs?: number;
+    error?: string;
+  };
+  system?: {
+    nodeVersion?: string;
+    platform?: string;
+    heapUsedMb?: number;
+    rssMb?: number;
+  };
   [key: string]: any;
 }
 
+export interface SpanError {
+  type: "NOT_FOUND" | "EMPTY_FEED" | "PARSE_ERROR" | "DB_ERROR" | "VALIDATION_ERROR" | string;
+  message: string;
+}
+
+export interface SpanRecord {
+  id: string;
+  traceId: string;
+  name: string;
+  route: string;
+  method: string;
+  statusCode: number;
+  durationMs: number;
+  clientIp: string;
+  feedSlug?: string | null;
+  postCount?: number | null;
+  errorType?: string | null;
+  errorMessage?: string | null;
+  error?: {
+    type?: string;
+    message?: string;
+  };
+  timestamp: string;
+}
+
 export interface CountData {
-  metrics?: any;
-  summary?: any;
+  metrics?: {
+    totalRequests?: number;
+    uniqueClientsCount?: number;
+    totalFeeds?: number;
+    totalPosts?: number;
+    errorRate?: string;
+    avgLatencyMs?: number;
+    requestsPerFeed?: Record<string, number> | any[];
+    requestsPerClient?: Record<string, number> | any[];
+  };
+  summary?: {
+    totalRequests?: number;
+    uniqueClientsCount?: number;
+    totalFeeds?: number;
+    totalPosts?: number;
+    errorRate?: string;
+    avgLatencyMs?: number;
+  };
+  recentSpans?: SpanRecord[];
+  recentErrors?: SpanRecord[];
   feeds?: any;
   clients?: any;
   [key: string]: any;
@@ -109,6 +165,7 @@ export function useMetricsDashboard() {
     return () => clearInterval(interval);
   }, [autoRefresh, mounted, fetchDashboardData]);
 
+  // Aggregate values
   const totalRequests =
     counts?.metrics?.totalRequests ?? counts?.summary?.totalRequests ?? 0;
   const uniqueClients =
@@ -117,7 +174,12 @@ export function useMetricsDashboard() {
     counts?.metrics?.totalFeeds ?? counts?.summary?.totalFeeds ?? 0;
   const totalPosts =
     counts?.metrics?.totalPosts ?? counts?.summary?.totalPosts ?? 0;
+  const errorRate =
+    counts?.metrics?.errorRate ?? counts?.summary?.errorRate ?? "0.0%";
+  const avgLatencyMs =
+    counts?.metrics?.avgLatencyMs ?? counts?.summary?.avgLatencyMs ?? 0;
 
+  // Breakdown tables
   const feedList = normalizeMetricsList(
     counts?.metrics?.requestsPerFeed ?? counts?.feeds,
     "feed"
@@ -127,6 +189,10 @@ export function useMetricsDashboard() {
     counts?.metrics?.requestsPerClient ?? counts?.clients,
     "clientId"
   );
+
+  // Spans and diagnostics
+  const recentSpans: SpanRecord[] = counts?.recentSpans ?? [];
+  const recentErrors: SpanRecord[] = counts?.recentErrors ?? [];
 
   const isHealthy =
     health?.status === "ok" || health?.status === "healthy" || health?.status === "UP";
@@ -143,8 +209,12 @@ export function useMetricsDashboard() {
     uniqueClients,
     totalFeeds,
     totalPosts,
+    errorRate,
+    avgLatencyMs,
     feedList,
     clientList,
+    recentSpans,
+    recentErrors,
     isHealthy,
     fetchDashboardData,
   };

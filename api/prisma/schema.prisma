@@ -1,5 +1,4 @@
-// This is your Prisma schema file,
-// learn more about it in the docs: https://pris.ly/d/prisma-schema
+// prisma/schema.prisma
 
 generator client {
   provider = "prisma-client"
@@ -10,37 +9,50 @@ datasource db {
   provider = "postgresql"
 }
 
-
 model Channel {
-  id            String       @id @default(uuid())
-  slug          String       @unique
-  name          String?
-  description   String?
-  posts         Post[]
+  id          String    @id @default(uuid())
+  slug        String    @unique
+  name        String?
+  description String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  posts       Post[]
 }
 
-model Post {    
-  id            String       @id @default(uuid())
-  postNumber    Int          @unique @default(autoincrement())
-  title         String
-  author        String
-  date          DateTime     @default(now())
-  summary       String
-  content       String
-  imageUrl      String?
-  channels      Channel[]
+model Post {
+  id          String    @id @default(uuid())
+  postNumber  Int       @unique @default(autoincrement())
+  title       String
+  author      String
+  date        DateTime  @default(now())
+  summary     String
+  content     String
+  imageUrl    String?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  channels    Channel[]
 }
 
-model RequestLog {
-  id           String        @id @default(uuid())
+model TelemetrySpan {
+  id           String    @id @default(uuid())
+  traceId      String
+  name         String    // e.g. "GET /api/rss/[slug]"
+  route        String    // e.g. "/api/rss/cs101"
+  method       String    // GET, POST, PUT, DELETE
+  statusCode   Int       // 200, 201, 404, 500
+  durationMs   Int       // Execution duration in milliseconds
   clientIp     String
-  endpoint     String
   feedSlug     String?
-  timestamp    DateTime      @default(now())
-}
+  postCount    Int?
+  
+  // Observability & error fields
+  errorType    String?   // NOT_FOUND, EMPTY_FEED, DB_ERROR, VALIDATION_ERROR
+  errorMessage String?
+  
+  timestamp    DateTime  @default(now())
 
-model MetricSummary {
-  id           String        @id @default("global")
-  totalCount   Int           @default(0)
-  lastUpdated  DateTime      @updatedAt
+  @@index([timestamp(sort: Desc)])
+  @@index([feedSlug])
+  @@index([clientIp])
+  @@index([statusCode])
 }
