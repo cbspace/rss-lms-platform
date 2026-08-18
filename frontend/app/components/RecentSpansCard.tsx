@@ -9,19 +9,19 @@ interface RecentSpansCardProps {
 
 export default function RecentSpansCard({ recentSpans }: RecentSpansCardProps) {
   return (
-    <div className="p-5 rounded-xl border border-element-border bg-[var(--elementBg)] space-y-4">
+    <div className="p-4 rounded-xl border border-element-border space-y-3">
       <div className="flex justify-between items-center">
         <h3 className="text-base font-mono font-bold opacity-90 uppercase tracking-wide flex items-center gap-2">
           <span>⏱️</span> Live Request Trace Spans
         </h3>
-        <span className="text-xs font-mono opacity-60">
+        <span className="text-sm font-mono opacity-60">
           {recentSpans.length} Recent Records
         </span>
       </div>
 
       <div className="p-3 rounded-lg bg-field-background border border-element-border border-l-4 border-l-purple-500 overflow-x-auto">
         {recentSpans.length > 0 ? (
-          <table className="w-full text-left text-xs font-mono">
+          <table className="w-full text-left text-sm font-mono">
             <thead>
               <tr className="border-b border-element-border opacity-70 uppercase">
                 <th className="pb-2">Method & Route</th>
@@ -72,7 +72,7 @@ export default function RecentSpansCard({ recentSpans }: RecentSpansCardProps) {
             </tbody>
           </table>
         ) : (
-          <div className="text-xs font-mono opacity-50 py-3 text-center">
+          <div className="text-sm font-mono opacity-50 py-3 text-center">
             // No request spans captured yet
           </div>
         )}

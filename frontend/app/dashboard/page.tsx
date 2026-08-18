@@ -85,12 +85,12 @@ export default function MetricsDashboardPage() {
       <IncidentsCard recentErrors={recentErrors} errorRate={errorRate} />
 
       {/* TOP SUMMARY METRICS */}
-      <div className="p-5 rounded-xl border border-element-border space-y-4">
+      <div className="p-4 rounded-xl border border-element-border space-y-3">
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2">
           <h2 className="text-base font-semibold text-foreground font-mono flex items-center gap-2">
             <span>📊</span> Operational Summary Overview
           </h2>
-          <span className="text-[12px] font-mono opacity-60">
+          <span className="text-sm font-mono opacity-60">
             Last Updated: {lastRefreshed || "Fetching..."}
           </span>
         </div>

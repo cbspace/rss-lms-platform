@@ -27,7 +27,7 @@ export default function MetricBreakdownCard({
   formatAsCode = false,
 }: MetricBreakdownCardProps) {
   return (
-    <div className="p-5 rounded-xl border border-element-border bg-[var(--elementBg)] space-y-4">
+    <div className="p-4 rounded-xl border border-element-border space-y-3">
       <div className="flex justify-between items-center">
         <h3 className="text-base font-mono font-bold opacity-90 uppercase tracking-wide flex items-center gap-2">
           <span>{icon}</span> {title}
@@ -37,7 +37,7 @@ export default function MetricBreakdownCard({
         </span>
       </div>
 
-      <div className="p-3 rounded-lg bg-field-background border border-element-border border-l-4 border-l-purple-500">
+      <div className="px-3 pt-3 pb-1 rounded-lg bg-field-background border border-element-border border-l-4 border-l-purple-500">
         {data.length > 0 ? (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-sm font-mono">
@@ -60,17 +60,17 @@ export default function MetricBreakdownCard({
                       key={row.label}
                       className="hover:bg-background/40 transition-colors"
                     >
-                      <td className="py-2.5 text-foreground truncate max-w-[180px]">
+                      <td className="py-2 text-foreground truncate max-w-[180px] last:pb-2">
                         {formatAsCode ? (
                           <code className="text-xs">{row.label}</code>
                         ) : (
                           <span className="font-bold">{row.label}</span>
                         )}
                       </td>
-                      <td className="py-2.5 text-right font-bold text-foreground">
+                      <td className="py-2 text-right font-bold text-foreground">
                         {row.count.toLocaleString()}
                       </td>
-                      <td className="py-2.5 text-right opacity-80">{share}%</td>
+                      <td className="py-2 text-right opacity-80">{share}%</td>
                     </tr>
                   );
                 })}
@@ -78,7 +78,7 @@ export default function MetricBreakdownCard({
             </table>
           </div>
         ) : (
-          <div className="text-sm font-mono opacity-50 py-4 text-center">
+          <div className="text-sm font-mono opacity-50 py-3 text-center">
             // {emptyMessage}
           </div>
         )}

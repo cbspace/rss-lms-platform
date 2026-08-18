@@ -17,10 +17,6 @@ export async function GET(request: NextRequest) {
       status: "ok",
       version: packageJson.version || process.env.npm_package_version || "1.0.0",
       environment: process.env.NODE_ENV || "development",
-      commitSha:
-        process.env.VERCEL_GIT_COMMIT_SHA?.substring(0, 7) ||
-        process.env.NEXT_PUBLIC_GIT_SHA?.substring(0, 7) ||
-        "local-dev",
       uptime: Math.floor(process.uptime()),
       timestamp: new Date().toISOString(),
       database: {

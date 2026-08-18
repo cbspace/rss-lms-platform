@@ -53,7 +53,7 @@ export default function JsonPayloadCard({
       : null;
 
   return (
-    <div className="p-5 rounded-xl border border-element-border bg-[var(--elementBg)] space-y-3 font-mono">
+    <div className="p-4 rounded-xl border border-element-border space-y-3 font-mono">
       {/* CARD HEADER */}
       <div className="flex justify-between items-center gap-2">
         <h3 className="text-base font-bold text-foreground flex items-center gap-2">

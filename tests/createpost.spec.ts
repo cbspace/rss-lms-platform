@@ -16,8 +16,8 @@ test.describe('Create a test post', () => {
     const title = 'My First Post';
     const author = 'Test Author';
     const imageUrl = 'https://images.unsplash.com/photo-1591779051696-1c3fa1469a79?q=80&w=1374&auto=format&fit=crop';
-    const content = 'This is a test description for the blog post.';
-    const channelName = 'cs101';
+    const content = 'This is a test blog post written by an automated test';
+    const channelName = 'general';
 
     // Ensure the form elements are visible and ready to interact
     // .fill() automatically waits for visibility and actionability:

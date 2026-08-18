@@ -10,7 +10,7 @@ interface HealthRuntimeCardProps {
 
 export default function HealthRuntimeCard({ health, isHealthy }: HealthRuntimeCardProps) {
   return (
-    <div className="p-5 rounded-xl border border-element-border bg-[var(--elementBg)] space-y-3 font-mono">
+    <div className="p-4 rounded-xl border border-element-border space-y-3 font-mono">
       <h3 className="text-base font-bold opacity-90 uppercase tracking-wide flex items-center gap-2">
         <span>🩺</span> Health & Runtime (/api/health)
       </h3>
@@ -30,15 +30,14 @@ export default function HealthRuntimeCard({ health, isHealthy }: HealthRuntimeCa
           <span className="opacity-80">App Version</span>
           <span className="text-foreground font-semibold">
             v{health?.version || "1.0.0"}{" "}
-            <span className="text-[11px] opacity-60">({health?.environment || "dev"})</span>
           </span>
         </div>
 
-        {health?.commitSha && (
+        {health?.environment && (
           <div className="flex justify-between items-center">
-            <span className="opacity-80">Git Commit</span>
-            <code className="text-purple-400 bg-purple-950/40 px-1.5 py-0.5 rounded text-xs">
-              {health.commitSha}
+            <span className="opacity-80">Environment</span>
+            <code className="text-foreground font-semibold">
+              {health.environment}
             </code>
           </div>
         )}
@@ -55,7 +54,7 @@ export default function HealthRuntimeCard({ health, isHealthy }: HealthRuntimeCa
         {health?.uptime !== undefined && (
           <div className="flex justify-between items-center">
             <span className="opacity-80">Uptime</span>
-            <span className="text-foreground">
+            <span className="text-foreground font-semibold">
               {Math.floor(health.uptime / 60)}m {Math.floor(health.uptime % 60)}s
             </span>
           </div>
@@ -64,14 +63,14 @@ export default function HealthRuntimeCard({ health, isHealthy }: HealthRuntimeCa
         {health?.system?.nodeVersion && (
           <div className="flex justify-between items-center">
             <span className="opacity-80">Node Runtime</span>
-            <span className="text-foreground text-xs">{health.system.nodeVersion}</span>
+            <span className="text-foreground font-semibold">{health.system.nodeVersion}</span>
           </div>
         )}
 
         {health?.system?.heapUsedMb && (
           <div className="flex justify-between items-center">
             <span className="opacity-80">Memory Heap</span>
-            <span className="text-foreground">{health.system.heapUsedMb} MB</span>
+            <span className="text-foreground font-semibold">{health.system.heapUsedMb} MB</span>
           </div>
         )}
       </div>
