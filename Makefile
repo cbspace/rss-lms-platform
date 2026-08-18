@@ -75,3 +75,11 @@ clear-database:
 	else \
 		echo "❌ Operation cancelled."; \
 	fi
+
+# Run Playwright Tests and Generate Report
+test:
+	@npx playwright test --reporter=html
+
+# View Test Report
+test-report:
+	@npx playwright show-report
