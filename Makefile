@@ -2,6 +2,9 @@
 
 MAKEFLAGS += --no-print-directory
 
+PLAYWRIGHT_BASE_URL_LOCAL := http://10.0.0.100:90
+PLAYWRIGHT_BASE_URL_PROD := https://rss-lms.com
+
 # Setup a bare VM (ask first to make sure!)
 setup:
 	@bash -c 'read -p "Setup and install required packages? [y/N]: " confirm && [[ $$confirm == [yY] || $$confirm == [yY][eE][sS] ]] || (echo "Aborted." && exit 1)'
@@ -76,9 +79,13 @@ clear-database:
 		echo "❌ Operation cancelled."; \
 	fi
 
-# Run Playwright Tests and Generate Report
-test:
-	@npx playwright test --reporter=html
+# Run Playwright Tests and Generate Report (local)
+test-local:
+	@BASE_URL=$(PLAYWRIGHT_BASE_URL_LOCAL) npx playwright test --reporter=html
+
+# Run Playwright Tests and Generate Report (production)
+test-prod:
+	@BASE_URL=$(PLAYWRIGHT_BASE_URL_PROD) npx playwright test --reporter=html
 
 # View Test Report
 test-report:

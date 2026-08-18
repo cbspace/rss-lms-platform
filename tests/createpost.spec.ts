@@ -4,7 +4,7 @@ import { test, expect } from '@playwright/test';
 test.describe('Create a test post', () => {
   test('should allow the user to input post data, save it, and display it on the Posts page', async ({ page }) => {
     // Step 1: Visit the Create Post page
-    await page.goto('http://10.0.0.100:90/posts/create');
+    await page.goto('/posts/create');
 
     // Wait for the page to settle and be ready for interaction
     await page.waitForLoadState('networkidle'); // Ensures all network requests are completed
