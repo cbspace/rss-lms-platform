@@ -15,7 +15,7 @@ export default function IncidentsCard({ recentErrors, errorRate }: IncidentsCard
 
   return (
     <div className="p-4 rounded-xl bg-amber-500/10 border border-amber-500/30 space-y-2 font-mono">
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between pb-2">
         <div className="flex items-center gap-2 text-foreground font-bold text-base">
           <span>⚠️</span> System Warnings & Incidents ({recentErrors.length})
         </div>
@@ -46,7 +46,6 @@ export default function IncidentsCard({ recentErrors, errorRate }: IncidentsCard
               className="flex flex-col sm:flex-row justify-between sm:items-center gap-2 opacity-90 border-b border-amber-500/10 pb-1.5 last:border-none"
             >
               <div className="flex items-center gap-2 flex-wrap">
-                {/* Fixed container width; align left (or center) without stretching badge */}
                 <div className="w-42 shrink-0 flex items-center">
                   <span
                     className={`px-1.5 rounded text-[14px] font-medium tracking-wider ${

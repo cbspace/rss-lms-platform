@@ -32,7 +32,7 @@ export default function MetricBreakdownCard({
         <h3 className="text-base font-mono font-bold opacity-90 uppercase tracking-wide flex items-center gap-2">
           <span>{icon}</span> {title}
         </h3>
-        <span className="text-xs font-mono opacity-60">
+        <span className="text-sm font-mono opacity-60">
           {data.length} {countLabel}
         </span>
       </div>

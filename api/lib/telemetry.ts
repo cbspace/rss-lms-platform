@@ -11,7 +11,7 @@ export interface RecordSpanInput {
   req?: NextRequest | Request;
   traceId?: string;
   clientIp?: string;
-  name: string; // e.g. "GET /api/rss/[slug]"
+  name: string;
   route: string;
   method: string;
   statusCode: number;
@@ -21,8 +21,49 @@ export interface RecordSpanInput {
   error?: SpanError;
 }
 
-// In-memory cache to ensure EMPTY_FEED warnings are only recorded once per channel
-const warnedEmptyFeeds = new Set<string>();
+// Preserve state across Next.js dev reloads using globalThis
+const globalTelemetry = globalThis as unknown as {
+  warnedEmptyFeeds?: Set<string>;
+  telemetryInitPromise?: Promise<void> | null;
+};
+
+if (!globalTelemetry.warnedEmptyFeeds) {
+  globalTelemetry.warnedEmptyFeeds = new Set<string>();
+}
+
+const warnedEmptyFeeds = globalTelemetry.warnedEmptyFeeds;
+
+/**
+ * Lazy startup loader: queries DB once on first call to populate existing warnings.
+ */
+async function ensureInitialized() {
+  if (globalTelemetry.telemetryInitPromise) {
+    return globalTelemetry.telemetryInitPromise;
+  }
+
+  globalTelemetry.telemetryInitPromise = (async () => {
+    try {
+      const existing = await prisma.telemetrySpan.findMany({
+        where: {
+          errorType: "EMPTY_FEED",
+          feedSlug: { not: null },
+        },
+        select: { feedSlug: true },
+        distinct: ["feedSlug"],
+      });
+
+      for (const row of existing) {
+        if (row.feedSlug) {
+          warnedEmptyFeeds.add(row.feedSlug);
+        }
+      }
+    } catch (err) {
+      console.error("Failed to pre-seed warned feeds from DB:", err);
+    }
+  })();
+
+  return globalTelemetry.telemetryInitPromise;
+}
 
 /**
  * Resets the warning latch for a given channel slug (e.g. when posts are added/deleted).
@@ -31,9 +72,6 @@ export function resetFeedWarning(feedSlug: string) {
   warnedEmptyFeeds.delete(feedSlug);
 }
 
-/**
- * Extracts the client IP address from proxy headers or falls back to localhost.
- */
 export function getClientIp(req: NextRequest | Request): string {
   const forwarded = req.headers.get("x-forwarded-for");
   if (forwarded) {
@@ -42,9 +80,6 @@ export function getClientIp(req: NextRequest | Request): string {
   return req.headers.get("x-real-ip") || "127.0.0.1";
 }
 
-/**
- * Extracts an existing trace ID from request headers or generates a unique fallback.
- */
 export function getTraceId(req: NextRequest | Request): string {
   return (
     req.headers.get("x-trace-id") ||
@@ -52,10 +87,6 @@ export function getTraceId(req: NextRequest | Request): string {
   );
 }
 
-/**
- * Records an execution trace span directly into the PostgreSQL database.
- * Deduplicates EMPTY_FEED warnings so each feed channel only generates one warning record.
- */
 export async function recordSpan(input: RecordSpanInput) {
   const clientIp =
     input.clientIp || (input.req ? getClientIp(input.req) : "127.0.0.1");
@@ -65,14 +96,14 @@ export async function recordSpan(input: RecordSpanInput) {
   let errorType = input.error?.type;
   let errorMessage = input.error?.message;
 
-  // Deduplicate EMPTY_FEED warnings per channel
   if (errorType === "EMPTY_FEED" && input.feedSlug) {
+    // Ensure the in-memory cache is hydrated from existing DB records
+    await ensureInitialized();
+
     if (warnedEmptyFeeds.has(input.feedSlug)) {
-      // Already logged this warning previously: record the span as a normal request
       errorType = undefined;
       errorMessage = undefined;
     } else {
-      // Mark as warned for subsequent requests
       warnedEmptyFeeds.add(input.feedSlug);
     }
   }
@@ -94,7 +125,6 @@ export async function recordSpan(input: RecordSpanInput) {
       },
     });
   } catch (err) {
-    // Prevent telemetry persistence failure from breaking the request response cycle
     console.error("Failed to persist telemetry span to database:", err);
     return null;
   }
