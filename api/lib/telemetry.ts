@@ -179,7 +179,7 @@ export async function getTelemetryAggregates() {
           where: {
             OR: [{ statusCode: { gte: 400 } }, { errorType: { not: null } }],
           },
-          take: 5,
+          take: 10,
           orderBy: { timestamp: "desc" },
         })
         .catch(() => []),
