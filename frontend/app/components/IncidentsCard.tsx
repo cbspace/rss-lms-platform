@@ -19,7 +19,7 @@ export default function IncidentsCard({
   // 1. INITIAL / UNRESOLVED STATE (Neutral gray shell, no green flash)
   if (!hasLoaded) {
     return (
-      <div className="p-4 rounded-xl border border-element-border font-mono h-[250px] flex flex-col justify-between bg-[var(--elementBg)]/40">
+      <div className="p-4 rounded-xl border border-element-border font-mono h-[218px] flex flex-col justify-between bg-[var(--elementBg)]/40">
         <div className="flex items-center justify-between pb-2 shrink-0">
           <div className="flex items-center gap-2 text-foreground font-bold text-base opacity-70">
             <span>⏳</span>
