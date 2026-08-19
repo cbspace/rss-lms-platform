@@ -17,17 +17,9 @@ export default function RssReaderPage() {
     handleUrlInputChange,
   } = useRssReader();
 
-  if (loading) {
-    return (
-      <div className="w-4xl mx-auto p-6 font-mono text-center text-sm opacity-70">
-        [Initializing XML Feed Reader...]
-      </div>
-    );
-  }
-
   return (
-    <div className="w-full max-w-4xl mx-auto space-y-6 pb-104">
-      {/* HEADER SECTION */}
+    <div className="w-full max-w-4xl mx-auto space-y-6 pb-24">
+      {/* HEADER SECTION - Always visible, never shifts */}
       <TitleSection
         title="RSS XML Reader"
         icon="📡"
@@ -56,22 +48,30 @@ export default function RssReaderPage() {
         }
       />
 
-      {/* CHANNEL BUTTON PILLS */}
-      <div className="flex flex-wrap gap-2">
-        {channels.map((chan) => (
-          <button
-            key={chan.id || chan.slug}
-            onClick={() => handleSelectChannel(chan.slug)}
-            className={`px-3 py-1.5 rounded-full text-sm font-mono transition-colors border ${
-              selectedSlug === chan.slug
-                ? "bg-purple-600 border-purple-500 text-white font-bold"
-                : "bg-field-background border-element-border hover:border-purple-500 opacity-80"
-            }`}
-          >
-            #{chan.slug}
-          </button>
-        ))}
-      </div>
+      {/* CHANNEL BUTTON PILLS / SKELETON */}
+      {loading ? (
+        <div className="flex gap-2 animate-pulse" aria-busy="true">
+          <div className="h-8 w-20 rounded-full bg-element-border/40" />
+          <div className="h-8 w-24 rounded-full bg-element-border/40" />
+          <div className="h-8 w-20 rounded-full bg-element-border/40" />
+        </div>
+      ) : (
+        <div className="flex flex-wrap gap-2">
+          {channels.map((chan) => (
+            <button
+              key={chan.id || chan.slug}
+              onClick={() => handleSelectChannel(chan.slug)}
+              className={`px-3 py-1.5 rounded-full text-sm font-mono transition-colors border ${
+                selectedSlug === chan.slug
+                  ? "bg-purple-600 border-purple-500 text-white font-bold"
+                  : "bg-field-background border-element-border hover:border-purple-500 opacity-80"
+              }`}
+            >
+              #{chan.slug}
+            </button>
+          ))}
+        </div>
+      )}
 
       {/* ERROR DISPLAY */}
       {error && (
@@ -81,9 +81,30 @@ export default function RssReaderPage() {
       )}
 
       {/* FEED CONTENT CONTAINER */}
-      {feedLoading ? (
-        <div className="p-12 text-center font-mono text-sm opacity-50 animate-pulse">
-          Parsing #{selectedSlug} XML payload...
+      {loading || feedLoading ? (
+        <div className="space-y-6 animate-pulse" aria-busy="true">
+          {/* Skeleton: Feed Header Banner */}
+          <div className="h-24 p-5 rounded-xl border border-element-border bg-[var(--elementBg)]/50 flex flex-col justify-center gap-2">
+            <div className="flex items-center gap-2">
+              <div className="h-6 w-28 rounded bg-purple-500/10" />
+              <div className="h-6 w-48 rounded bg-element-border/50" />
+            </div>
+            <div className="h-4 w-72 rounded bg-element-border/30" />
+          </div>
+
+          {/* Skeleton: Post Cards */}
+          <div className="space-y-6">
+            {[1, 2].map((i) => (
+              <div
+                key={i}
+                className="h-44 rounded-xl border border-element-border bg-[var(--elementBg)]/40 p-6 space-y-4"
+              >
+                <div className="h-6 w-3/4 rounded bg-element-border/60" />
+                <div className="h-4 w-full rounded bg-element-border/30" />
+                <div className="h-4 w-2/3 rounded bg-element-border/30" />
+              </div>
+            ))}
+          </div>
         </div>
       ) : parsedFeed ? (
         <div className="space-y-6">
