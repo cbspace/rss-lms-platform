@@ -85,7 +85,7 @@ export default function ChannelSelect({ selectedIds, onChange, error }: ChannelS
       {/* Checkbox List Container */}
       <div 
         className={`p-3 rounded-lg border bg-[var(--background)] space-y-2 transition-colors ${
-          error ? 'border-red-500/80 ring-1 ring-red-500/50' : 'border-[var(--elementBorder)]'
+          error ? 'border-red-500/80 ring-1 ring-red-500/50' : 'border-element-border'
         }`}
       >
         {loading ? (
@@ -107,19 +107,33 @@ export default function ChannelSelect({ selectedIds, onChange, error }: ChannelS
                 className={`flex items-start gap-3 p-2 rounded-md border transition-colors cursor-pointer select-none ${
                   isChecked
                     ? 'border-purple-500/40 bg-purple-500/10'
-                    : 'border-transparent hover:bg-[var(--elementBg)]'
+                    : 'border-transparent hover:border-purple-500/50'
                 }`}
               >
                 <input
                   type="checkbox"
+                  name={ch.slug}
+                  id={`channel-${ch.slug}`}
+                  value={channelIdentifier}
                   checked={isChecked}
                   onChange={() => handleToggle(channelIdentifier)}
-                  className="mt-0.5 rounded border-[var(--elementBorder)] text-purple-600 focus:ring-purple-500 cursor-pointer"
+                  className="mt-0.5 rounded border-element-border text-purple-600 focus:ring-purple-500 cursor-pointer"
                 />
                 
                 <div className="flex-1 text-sm">
-                  <div className="font-semibold text-[var(--foreground)]">
-                    📺 {ch.name}
+                  <div className="flex items-center gap-2 flex-wrap">
+                    <span className="font-semibold text-foreground">
+                      📺 {ch.name}
+                    </span>
+                    <span
+                      className={`px-1.5 py-0.5 rounded text-sm font-mono text-foreground ${
+                        isChecked
+                          ? "font-medium opacity-90"
+                          : "opacity-80"
+                      }`}
+                    >
+                      #{ch.slug}
+                    </span>
                   </div>
                   {ch.description && (
                     <p className="opacity-60 text-sm mt-0.5">{ch.description}</p>
@@ -139,7 +153,7 @@ export default function ChannelSelect({ selectedIds, onChange, error }: ChannelS
         </p>
       ) : (
         <p className="pt-1 text-sm opacity-60 font-mono">
-          Selected feeds will output this article at <code className="text-purple-400">/api/rss/channel</code>
+          Selected feeds will output this article at <code className="text-purple-400">/api/rss/[slug]</code>
         </p>
       )}
     </div>

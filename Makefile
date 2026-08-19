@@ -1,6 +1,9 @@
-.PHONY: setup deploy stop check-env prune api frontend dev migrate check-migration-needed clear-database
+.PHONY: setup deploy stop check-env prune api frontend dev migrate check-migration-needed clear-database test-local test-prod test-report
 
 MAKEFLAGS += --no-print-directory
+
+PLAYWRIGHT_BASE_URL_LOCAL := http://10.0.0.100:90
+PLAYWRIGHT_BASE_URL_PROD := https://rss-lms.com
 
 # Setup a bare VM (ask first to make sure!)
 setup:
@@ -75,3 +78,15 @@ clear-database:
 	else \
 		echo "❌ Operation cancelled."; \
 	fi
+
+# Run Playwright Tests and Generate Report (local)
+test-local:
+	@BASE_URL=$(PLAYWRIGHT_BASE_URL_LOCAL) npx playwright test --reporter=html
+
+# Run Playwright Tests and Generate Report (production)
+test-prod:
+	@BASE_URL=$(PLAYWRIGHT_BASE_URL_PROD) npx playwright test --reporter=html
+
+# View Test Report
+test-report:
+	@npx playwright show-report

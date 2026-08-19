@@ -1,4 +1,3 @@
-// components/Breadcrumbs.tsx
 'use client';
 
 import Link from 'next/link';
@@ -10,10 +9,14 @@ export default function Breadcrumbs() {
   // Don't display breadcrumbs on the homepage
   if (pathname === '/') return null;
 
+  const isReaderPage = pathname.startsWith('/reader'); // Reader page uses narrow layout
   const segments = pathname.split('/').filter(Boolean);
 
   return (
-    <nav aria-label="Breadcrumb" className="mb-4">
+    <nav
+      aria-label="Breadcrumb"
+      className={`mb-4 w-full ${isReaderPage ? 'max-w-4xl mx-auto' : ''}`}
+    >
       <ol className="flex items-center gap-2 text-sm font-mono">
         <li>
           <Link href="/" className="hover:underline hover:text-purple-400">

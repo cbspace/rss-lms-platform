@@ -56,7 +56,7 @@ export default function ReaderCard({ item }: ReaderCardProps) {
 
         {/* RIGHT THUMBNAIL BLOCK */}
         {item.imageUrl && (
-          <div className="w-full sm:w-36 h-28 shrink-0 rounded-lg overflow-hidden border border-element-border bg-field-background">
+          <div className="w-full sm:w-52 h-28 shrink-0 rounded-lg overflow-hidden border border-element-border bg-field-background">
             <img
               src={item.imageUrl}
               alt={item.title}

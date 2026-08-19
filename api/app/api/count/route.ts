@@ -1,52 +1,52 @@
+// api/app/api/count/route.ts
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { getTelemetryAggregates } from "@/lib/telemetry";
+
+export const dynamic = "force-dynamic";
 
 export async function GET() {
   try {
-    // 1. Fetch total request count
-    const summary = await prisma.metricSummary.findUnique({
-      where: { id: "global" },
-    });
-
-    // 2. Count total channels and posts
-    const [totalChannels, totalPosts] = await Promise.all([
-      prisma.channel.count(),
-      prisma.post.count(),
+    const [telemetry, totalFeeds, totalPosts] = await Promise.all([
+      getTelemetryAggregates(),
+      prisma.channel.count().catch(() => 0),
+      prisma.post.count().catch(() => 0),
     ]);
 
-    // 3. Count unique clients (IPs)
-    const uniqueClients = await prisma.requestLog.groupBy({
-      by: ["clientIp"],
-      _count: true,
-    });
+    const summary = telemetry?.summary ?? {
+      totalRequests: 0,
+      uniqueClientsCount: 0,
+      errorRate: "0.0%",
+      avgLatencyMs: 0,
+      totalErrors: 0,
+    };
 
-    // 4. Requests grouped per feed
-    const requestsPerFeed = await prisma.requestLog.groupBy({
-      by: ["feedSlug"],
-      where: { feedSlug: { not: null } },
-      _count: { feedSlug: true },
-    });
-
-    return NextResponse.json(
-      {
-        timestamp: new Date().toISOString(),
-        metrics: {
-          totalRequests: summary?.totalCount || 0,
-          uniqueClientsCount: uniqueClients.length,
-          totalFeeds: totalChannels,
-          totalPosts: totalPosts,
-          requestsPerFeed: requestsPerFeed.map((item) => ({
-            feed: item.feedSlug,
-            count: item._count.feedSlug,
-          })),
-        },
+    return NextResponse.json({
+      metrics: {
+        totalRequests: summary.totalRequests,
+        uniqueClientsCount: summary.uniqueClientsCount,
+        totalFeeds: totalFeeds ?? 0,
+        totalPosts: totalPosts ?? 0,
+        errorRate: summary.errorRate,
+        avgLatencyMs: summary.avgLatencyMs,
+        requestsPerFeed: telemetry?.requestsPerFeed ?? {},
+        requestsPerClient: telemetry?.requestsPerClient ?? {},
       },
-      { status: 200 }
-    );
+      summary: {
+        totalRequests: summary.totalRequests,
+        uniqueClientsCount: summary.uniqueClientsCount,
+        totalFeeds: totalFeeds ?? 0,
+        totalPosts: totalPosts ?? 0,
+        errorRate: summary.errorRate,
+        avgLatencyMs: summary.avgLatencyMs,
+      },
+      recentSpans: telemetry?.recentSpans ?? [],
+      recentErrors: telemetry?.recentErrors ?? [],
+    });
   } catch (error: any) {
     console.error("GET /api/count Error:", error);
     return NextResponse.json(
-      { error: "Failed to load metrics", details: error?.message },
+      { error: "Failed to load metrics", details: error?.message || String(error) },
       { status: 500 }
     );
   }
