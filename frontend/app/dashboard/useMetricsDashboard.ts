@@ -117,7 +117,8 @@ function normalizeMetricsList(rawData: any, keyField: string = "feed"): MetricRo
 
 export function useMetricsDashboard() {
   const [mounted, setMounted] = useState(false);
-  const [loading, setLoading] = useState(true);
+  // Ensure initial loading state is consistent (e.g., true on both if it fetches on load, or false on both)
+  const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
   const [lastRefreshed, setLastRefreshed] = useState<string>("");
   const [autoRefresh, setAutoRefresh] = useState(true);

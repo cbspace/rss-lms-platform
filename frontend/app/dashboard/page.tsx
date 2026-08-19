@@ -33,16 +33,6 @@ export default function MetricsDashboardPage() {
     fetchDashboardData,
   } = useMetricsDashboard();
 
-  if (!mounted) {
-    return (
-      <div className="w-full max-w-6xl mx-auto space-y-6 pb-10 p-4">
-        <div className="p-8 text-center text-foreground font-mono">
-          [Mounting Observability Dashboard...]
-        </div>
-      </div>
-    );
-  }
-
   return (
     <div id="metrics_dashboard" className="w-full max-w-6xl mx-auto space-y-6 pb-10">
       <TitleSection
@@ -57,7 +47,7 @@ export default function MetricsDashboardPage() {
           <div className="flex items-center gap-3">
             <button
               onClick={() => fetchDashboardData()}
-              disabled={loading}
+              disabled={Boolean(loading)}
               className="px-3 py-1.5 rounded-lg bg-purple-600 hover:bg-purple-500 text-white text-sm font-mono font-semibold transition-colors disabled:opacity-50"
             >
               {loading ? "Refreshing..." : "Refresh Now"}
