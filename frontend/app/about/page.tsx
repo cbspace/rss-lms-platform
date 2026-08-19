@@ -20,6 +20,17 @@ export default function AboutPage() {
             </p>
           </>}
       />
+      <div className="w-full mx-auto my-6">
+        <div className="relative aspect-video rounded-xl overflow-hidden border border-element-border shadow-sm">
+          <iframe
+            src="https://drive.google.com/file/d/1PFXETX8HoBOKfZ-C1O7LJ0tCJLniLcqT/preview"
+            className="absolute top-0 left-0 w-full h-full border-0"
+            allow="autoplay"
+            allowFullScreen
+          />
+        </div>
+      </div>
+
       <section className="grid grid-cols-1 md:grid-cols-2 gap-6">
         <InfoModuleCard
           tag="⚙️ Scope & Intent"
@@ -31,15 +42,12 @@ export default function AboutPage() {
           heading_gap
         />
         <InfoModuleCard
-          tag="⚡ Assessment 2 Highlights"
-          title="Key Full-Stack & Server Capabilities"
+          tag="⚡ Assessment 3 Highlights"
+          title="Observability, Metrics & Testing"
           description={[
-            "PostgreSQL & Prisma ORM database persistence",
-            "Valid RSS 2.0 XML feed engine",
-            "RESTful API endpoints supporting post id and postNumber",
-            "User-friendly conflict handling for duplicate channel slugs (P2002)",
-            "RSS Feed Viewer",
-            "Operational health telemetry, live metric tracking and development dashbaord"
+            "Live Observability Dashboard: interactive, auto-refreshing dashboard displaying latency metrics, traffic distributions, and system incident alerts.",
+            "Comprehensive Playwright E2E Test Suite: Automated server-side CRUD workflows for posts and verified client-side RSS XML.",
+            "JMeter Load & Scalability Testing: Designed staged load testing scenarios to evaluate database throughput and feed retrieval under stress.",
           ]}
           colour="orange-400"
           heading_gap
@@ -61,18 +69,18 @@ export default function AboutPage() {
             compact
           />
           <InfoModuleCard
-            tag="Current PHase"
+            tag="Completed"
             title="Assessment 2: Backend, Database and API Integration"
             description="Docker containerisation of backend, replaced mock datasets with Prisma models, active RSS 2.0 XML endpoints, RESTful CRUD API routes."
-            colour="purple-400"
+            colour="emerald-400"
             heading_gap
             compact
           />
           <InfoModuleCard
-            tag="UPCOMING (ASSESSMENT 3)"
+            tag="Current Phase"
             title="Assessment 3: Observability, Metrics & Testing"
             description="Operational health telemetry, database-persisted analytics dashboard, automated Playwright E2E tests, JMeter load testing, and Lighthouse WCAG auditing."
-            colour="gray-400"
+            colour="purple-400"
             heading_gap
             compact
           />
