@@ -95,34 +95,70 @@ make prod
    2. **Frontend:** `HTTP` → Path: "" → Service: `frontend:3000`
 3. **SSL/TLS Encryption:** Under Cloudflare Dashboard → **SSL/TLS**, set mode to **Full** or **Full (strict)** to avoid 301/302 redirect loops.
 
+### 6. Playwright Tests
+#### Install Playwright Dependencies
+Before running tests for the first time, install browser binaries:
+
+```bash
+npx playwright install --with-deps
+```
+
+#### Running Tests
+```bash
+# Run tests against Local Dev environment (http://10.0.0.100:90)
+make test-local
+
+# Run tests against Production deployment (https://rss-lms.com)
+make test-prod
+
+# Run in Interactive UI Mode (headed browser with live step debugger)
+npx playwright test --ui
+
+# Open HTML Test Results Report
+make test-report
+```
 
 ## 📂 Project & Container Structure
 
 ```bash
-├── Makefile                          # Automation commands (make dev, make prod, make stop)
-├── docker-compose.yml                # Production Compose stack
-├── docker-compose-dev.yml            # Development Compose stack
-├── .env                              # Environment configuration
-├── api/                              # Backend Next.js API & Telemetry Service
+├── Makefile                            # Automation commands (make dev, make prod, make test-local, make test-prod)
+├── docker-compose.yml                  # Production Compose stack
+├── docker-compose-dev.yml              # Development Compose stack
+├── playwright.config.ts                # Playwright E2E configuration
+├── package.json                        # Root orchestration & test script dependencies
+├── api/                                # Backend Next.js API & Telemetry Service
 │   ├── app/
 │   │   └── api/
-│   │       ├── health/               # /api/health (System status check)
-│   │       ├── count/                # /api/count (Metrics telemetry endpoint)
-│   │       ├── rss/                  # RSS Feed creation and channel routes
-│   │       │   └── [slug]/           # Dynamic RSS XML & JSON feed generator
-│   │       └── posts/                # RESTful post endpoints
+│   │       ├── health/                 # /api/health (System status check)
+│   │       ├── count/                  # /api/count (Metrics & telemetry aggregate endpoint)
+│   │       ├── rss/                    # RSS Feed creation and channel routes
+│   │       │   └── [slug]/             # Dynamic RSS XML & JSON feed generator
+│   │       └── posts/                  # RESTful post endpoints
+│   │           └── [id]/               # Individual post CRUD handlers
 │   ├── lib/
-│   │   ├── channels.ts               # Channel database helpers & validation
-│   │   ├── metrics.ts                # Request counter & telemetry proxies
-│   │   ├── prisma.ts                 # Database client & pg adapter
-│   │   └── rss.ts                    # RSS 2.0 XML builder
-│   ├── Dockerfile                    # Production environment dockerfile
-│   └── Dockerfile-dev                # Dev environment dockerfile
-└── frontend/                         # Next.js 16 User Interface
-    ├── app/                          # App Router views & dashboard
-    ├── components/                   # Reusable UI cards, pills, & layout elements
-    ├── Dockerfile                    # Production environment dockerfile
-    └── Dockerfile-dev                # Dev environment dockerfile
+│   │   ├── channels.ts                 # Channel database helpers & validation
+│   │   ├── telemetry.ts                # Observability span capture & metric aggregation
+│   │   ├── prisma.ts                   # Database client & pg adapter
+│   │   └── rss.ts                      # RSS 2.0 XML builder
+│   ├── prisma/                         # Prisma schema & migration history
+│   ├── Dockerfile                      # Production environment dockerfile
+│   └── Dockerfile-dev                  # Dev environment dockerfile
+├── frontend/                           # Next.js User Interface
+│   ├── app/                            # App Router views (dashboard, reader, posts, channels)
+│   │   ├── components/                 # Reusable UI cards, metrics displays, & layout elements
+│   │   ├── dashboard/                  # Observability & telemetry metrics dashboard
+│   │   ├── posts/                      # Post management (list, view, create, edit)
+│   │   └── reader/                     # Interactive RSS feed reader
+│   ├── Dockerfile                      # Production environment dockerfile
+│   └── Dockerfile-dev                  # Dev environment dockerfile
+├── scripts/                            # System initialization & environment bootstrap scripts
+└── tests/                              # Playwright End-to-End test suite
+    ├── pages/                          # Page Object Models (PostsModule)
+    ├── client_rss.spec.ts              # Client use case: RSS XML retrieval & parsing
+    ├── create_post.spec.ts             # Server use case: Post creation flow
+    ├── view_post.spec.ts               # Server use case: Post detail rendering
+    ├── update_post.spec.ts             # Server use case: Post editing & updates
+    └── delete_post.spec.ts             # Server use case: Post deletion & confirmation
 ```
 
 
@@ -138,6 +174,7 @@ make prod
 | `/dev` | **Dev Test Dashboard** | Live outgoing request inspector, telemetry tester, and manual API execution suite. |
 | `/about` | **About Platform** | Architecture overview, assessment scope breakdown, and technical specifications. |
 | `/settings` | **Preferences** | Manage interface preferences and theme states. |
+| `/dashboard` | **Observability Dashboard** | Live telemetry monitoring displaying total requests, client traffic breakdowns, request latencies, and operational incident warnings. |
 
 
 ## ⚡ API Routes
@@ -203,11 +240,11 @@ docker compose up -d --build frontend
 
 ### Phase 3: Observability, Metrics & Testing (Assessment 3)
 - [x] Database-backed telemetry service tracking request counts, feed usage, and unique client IPs (`/api/count`).
-- [ ] Real-time operational healthcheck endpoint returning `200 OK` (`/api/health`).
-- [ ] Live telemetry dashboard with auto-refreshing operational indicators.
-- [ ] Playwright End-to-End test suites covering Server CRUD operations and Client feed retrieval.
-- [ ] Staged JMeter load testing configurations ($1\times$ to $10,000\times$ traffic levels).
-- [ ] WCAG 2.2 accessibility audit compliance via Lighthouse reports.
+- [x] Real-time operational healthcheck endpoint returning heath data (`/api/health`).
+- [x] Live telemetry dashboard with auto-refreshing operational indicators.
+- [x] Playwright End-to-End test suites covering Server CRUD operations and Client feed retrieval.
+- [x] Staged JMeter load testing configurations.
+- [x] WCAG 2.2 accessibility audit compliance via Lighthouse reports.
 
 ### Phase 4: Production Polish & Live Presentation (Assessment 4)
 - [ ] Final integrated system live demonstration & Q&A.
