@@ -1,4 +1,4 @@
-.PHONY: setup deploy stop check-env prune api frontend dev migrate check-migration-needed clear-database
+.PHONY: setup deploy stop check-env prune api frontend dev migrate check-migration-needed clear-database test-local test-prod test-report
 
 MAKEFLAGS += --no-print-directory
 

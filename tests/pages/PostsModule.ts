@@ -29,9 +29,9 @@ export class PostsModule {
 
     // Locators
     this.titleInput = page.getByLabel(/post title/i);
-    this.authorInput = page.getByPlaceholder('Course Instructor');
-    this.imageUrlInput = page.getByPlaceholder('https://images.unsplash.com/...');
-    this.contentInput = page.getByPlaceholder('Write your announcement or Post content...');
+    this.authorInput = page.getByLabel(/author/i);
+    this.imageUrlInput = page.getByLabel(/image url/i);
+    this.contentInput = page.getByLabel(/post content/i);
 
     this.editPostLink = page.getByRole('link', { name: /edit post/i });
     this.publishButton = page.getByRole('button', { name: /Publish Post & Update RSS Feeds/i });
@@ -61,20 +61,20 @@ export class PostsModule {
     if (data.title !== undefined) {
       await this.titleInput.fill(data.title, { timeout: this.defaultTimeout });
     }
-    // if (data.author !== undefined) {
-    //   await this.authorInput.fill(data.author, { timeout: this.defaultTimeout });
-    // }
-    // if (data.imageUrl !== undefined) {
-    //   await this.imageUrlInput.fill(data.imageUrl, { timeout: this.defaultTimeout });
-    // }
-    // if (data.content !== undefined) {
-    //   await this.contentInput.fill(data.content, { timeout: this.defaultTimeout });
-    // }
-    // if (data.channelName !== undefined) {
-    //   await this.page
-    //     .getByRole('checkbox', { name: new RegExp(data.channelName, 'i') })
-    //     .check({ timeout: this.defaultTimeout });
-    // }
+    if (data.author !== undefined) {
+      await this.authorInput.fill(data.author, { timeout: this.defaultTimeout });
+    }
+    if (data.imageUrl !== undefined) {
+      await this.imageUrlInput.fill(data.imageUrl, { timeout: this.defaultTimeout });
+    }
+    if (data.content !== undefined) {
+      await this.contentInput.fill(data.content, { timeout: this.defaultTimeout });
+    }
+    if (data.channelName !== undefined) {
+      await this.page
+        .getByRole('checkbox', { name: new RegExp(data.channelName, 'i') })
+        .check({ timeout: this.defaultTimeout });
+    }
   }
 
   /**
