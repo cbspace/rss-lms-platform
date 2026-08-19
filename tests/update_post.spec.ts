@@ -6,26 +6,45 @@ test.describe('Edit a test post', () => {
   test('should allow the user to input new post data, save it, and display it on the Posts page', async ({ page }) => {
     const postsModule = new PostsModule(page);
 
-    const initialTitle = 'My First Post';
+    // Details of a post to create
+    const postData = {
+      title: 'Test Post to Edit',
+      author: 'Test Author',
+      imageUrl: 'https://images.unsplash.com/photo-1591779051696-1c3fa1469a79?q=80&w=1374&auto=format&fit=crop',
+      content: 'This is a test blog post written by an automated test',
+      channelName: 'general',
+    };
+
+    // 1. Create Initial Post
+    await postsModule.gotoCreate();
+    await postsModule.fillPostForm(postData);
+    await postsModule.publishPost();
+
     const updatedPostData = {
         title: 'My Edited Post',
-        author: 'Test Author',
+        author: 'Test Author The Second',
         imageUrl: 'https://images.unsplash.com/photo-1591779051696-1c3fa1469a79?q=80&w=1374&auto=format&fit=crop',
-        content: 'This is a test blog post written by an automated test',
+        content: 'This is a test blog post written by an automated test and edited by another test',
         channelName: 'general',
     };
 
-    // 1. Visit the posts list
+    // 2. Visit the posts list
     await postsModule.gotoList();
 
-    // 2. Open post by initial title
-    await postsModule.openPostByTitle(initialTitle);
+    // 3. Open post by initial title
+    await postsModule.openPostByTitle(postData.title);
 
-    // 3. Navigate into edit form
+    // 4. Navigate into edit form
     await postsModule.enterEditMode();
 
-    // 4. Update data & save
+    // 5. Update data & save
     await postsModule.fillPostForm(updatedPostData);
     await postsModule.saveChanges();
+
+    // 6. Open and delete it
+    await postsModule.gotoList();
+    await postsModule.openPostByTitle(updatedPostData.title);
+    await postsModule.deletePost();
+    await postsModule.confirmPostDeleted(updatedPostData.title);
   });
 });

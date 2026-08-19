@@ -3,7 +3,7 @@ import { PostsModule } from './pages/PostsModule';
 
 test('should allow the user to delete a post and confirm its removal', async ({ page }) => {
   const postsModule = new PostsModule(page);
-  const deleteTargetTitle = `Post To Delete - ${Date.now()}`;
+  const deleteTargetTitle = 'Post To Delete';
 
   // 1. Create fresh post
   await postsModule.gotoCreate();

@@ -22,5 +22,11 @@ test.describe('Create a test post', () => {
 
     // 3. Publish the post
     await postsModule.publishPost();
+
+    // 4. Open and delete it
+    await postsModule.gotoList();
+    await postsModule.openPostByTitle(postData.title);
+    await postsModule.deletePost();
+    await postsModule.confirmPostDeleted(postData.title);
   });
 });

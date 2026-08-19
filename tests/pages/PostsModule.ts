@@ -77,7 +77,18 @@ export class PostsModule {
 
   // Submits the create form.
   async publishPost() {
-    await this.publishButton.click({ timeout: this.defaultTimeout });
+    await Promise.all([
+      // Wait for the server response or redirect away from /create
+      this.page.waitForResponse(
+        (resp) => resp.status() < 400 && resp.request().method() === 'POST',
+        { timeout: this.defaultTimeout }
+      ).catch(() => {}),
+      this.publishButton.click({ timeout: this.defaultTimeout }),
+    ]);
+
+    // Ensure it has finished creating and navigated away from /create
+    await expect(this.page).not.toHaveURL(/\/create\/?$/, { timeout: this.defaultTimeout });
+    await this.page.waitForLoadState('networkidle');
   }
 
   // Finds a post card by title and clicks its 'View / Edit' link.
