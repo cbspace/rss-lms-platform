@@ -6,23 +6,52 @@ import { SpanRecord } from "../dashboard/useMetricsDashboard";
 interface IncidentsCardProps {
   recentErrors: SpanRecord[];
   errorRate: string;
+  hasLoaded: boolean;
 }
 
-export default function IncidentsCard({ recentErrors, errorRate }: IncidentsCardProps) {
+export default function IncidentsCard({
+  recentErrors,
+  errorRate,
+  hasLoaded,
+}: IncidentsCardProps) {
   const hasErrors = recentErrors && recentErrors.length > 0;
 
+  // 1. INITIAL / UNRESOLVED STATE (Neutral gray shell, no green flash)
+  if (!hasLoaded) {
+    return (
+      <div className="p-4 rounded-xl border border-element-border font-mono h-[230px] flex flex-col justify-between bg-[var(--elementBg)]/40">
+        <div className="flex items-center justify-between pb-2 shrink-0">
+          <div className="flex items-center gap-2 text-foreground font-bold text-base opacity-70">
+            <span>⏳</span>
+            <span>System Warnings & Incidents</span>
+          </div>
+          <span className="text-base opacity-50 font-medium">Error Rate: ...</span>
+        </div>
+
+        <div className="h-[155px] space-y-2 flex flex-col justify-center animate-pulse">
+          <div className="h-6 w-full rounded bg-element-border/30" />
+          <div className="h-6 w-5/6 rounded bg-element-border/30" />
+          <div className="h-6 w-4/6 rounded bg-element-border/30" />
+        </div>
+      </div>
+    );
+  }
+
+  // 2. LOADED STATE (Green only after confirmed load)
   return (
     <div
-      className={`p-4 rounded-xl border font-mono transition-colors ${
+      className={`p-4 rounded-xl border font-mono h-[230px] flex flex-col justify-between ${
         hasErrors
-          ? "bg-amber-500/10 border-amber-500/30 space-y-2"
+          ? "bg-amber-500/10 border-amber-500/30"
           : "bg-emerald-500/5 border-emerald-500/20"
       }`}
     >
-      <div className="flex items-center justify-between">
+      <div className="flex items-center justify-between pb-2 shrink-0">
         <div className="flex items-center gap-2 text-foreground font-bold text-base">
           <span>{hasErrors ? "⚠️" : "✅"}</span>
-          <span>System Warnings & Incidents {hasErrors ? `(${recentErrors.length})` : ""}</span>
+          <span>
+            System Warnings & Incidents {hasErrors ? `(${recentErrors.length})` : ""}
+          </span>
         </div>
         <span className="text-base opacity-80 text-foreground font-medium">
           Error Rate: {errorRate}
@@ -30,7 +59,7 @@ export default function IncidentsCard({ recentErrors, errorRate }: IncidentsCard
       </div>
 
       {hasErrors ? (
-        <div className="space-y-1.5 text-[15px] pt-1">
+        <div className="h-[165px] overflow-y-auto space-y-1.5 text-[15px] pr-1">
           {recentErrors.map((err) => {
             const type =
               err.errorType ||
@@ -76,9 +105,11 @@ export default function IncidentsCard({ recentErrors, errorRate }: IncidentsCard
           })}
         </div>
       ) : (
-        <p className="text-sm opacity-60 mt-1">
-          All systems nominal. No recent operational warnings or request errors detected.
-        </p>
+        <div className="h-[155px] flex items-center justify-center text-center">
+          <p className="text-sm opacity-60">
+            All systems nominal. No recent operational warnings or request errors detected.
+          </p>
+        </div>
       )}
     </div>
   );

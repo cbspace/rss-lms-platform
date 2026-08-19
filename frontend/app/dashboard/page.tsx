@@ -72,7 +72,11 @@ export default function MetricsDashboardPage() {
       )}
 
       {/* OPERATIONAL WARNINGS & ERROR INCIDENTS */}
-      <IncidentsCard recentErrors={recentErrors} errorRate={errorRate} />
+      <IncidentsCard
+        recentErrors={recentErrors}
+        errorRate={errorRate}
+        hasLoaded={Boolean(lastRefreshed)}
+      />
 
       {/* TOP SUMMARY METRICS */}
       <div className="p-4 rounded-xl border border-element-border space-y-3">
